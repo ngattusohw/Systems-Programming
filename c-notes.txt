@@ -1,0 +1,13 @@
+String differences
+	char* hi = "abcde";
+		if you try to do hi[0] = q; you will get a protected variable violation
+
+	char[] hi = "abcde";
+		This will not cause the violation and is fine, no number is also needed within the brackets too.
+
+String creation
+	char[6] hi;
+	(void) strcpy(hi,"Hello");
+		Need an additonal byte for the null terminator
+
+Cannot get array length, but can get strlength ... check "man 3 string"
