@@ -1,9 +1,10 @@
 #include "../../include/my.h"
 
-void my_int(int i){
-	//char c = (char) i;
-	//write(1, &c, sizeof c);
-	write(1, &i, sizeof(i));
+void my_alpha(){
+	for(int x = 65; x<91;x++){
+		write(1, &x, sizeof(x));
+	}
+	
 }
 
 

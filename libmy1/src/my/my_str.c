@@ -24,9 +24,9 @@ void my_str(char* c){
 }
 
 
-int main(){
-	char a[] = "Hello World!\n\0";
-	my_str(a);
+// int main(){
+// 	char a[] = "Hello World!\n\0";
+// 	my_str(a);
 
-	return(0);
-}
+// 	return(0);
+// }

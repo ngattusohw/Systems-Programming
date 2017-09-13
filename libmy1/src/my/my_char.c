@@ -6,9 +6,9 @@ void my_char(char c){
 }
 
 
-int main() {
-	char a = '1';
-	my_char(a);
+// int main() {
+// 	char a = '1';
+// 	my_char(a);
 
-	return(0);
-}
+// 	return(0);
+// }
