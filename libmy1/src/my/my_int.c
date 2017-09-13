@@ -1,9 +1,7 @@
 #include "../../include/my.h"
 
 void my_int(int i){
-	//char c = (char) i;
-	//write(1, &c, sizeof c);
-	write(1, &i, sizeof(i));
+	my_num_base(i, "0123456789");
 }
 
 
