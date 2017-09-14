@@ -8,6 +8,10 @@ int main(){
 
 	char c[] = "12345";
 	my_int(my_strlen(c));
+	write(1,"\n",1);
+
+	char it = 'a';
+	my_int(my_strindex(c,it));
 
 
 	return(0);
