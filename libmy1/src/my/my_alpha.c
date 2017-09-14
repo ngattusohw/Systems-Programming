@@ -6,11 +6,3 @@ void my_alpha(){
 	}
 	
 }
-
-
-// int main(){
-// 	int a = 66;
-// 	my_int(a);
-
-// 	return(0);
-// }
