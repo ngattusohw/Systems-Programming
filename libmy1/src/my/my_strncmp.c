@@ -1,5 +1,10 @@
 #include "../../include/my.h"
 
-int my_strncmp(char*a, char *b, int n){    int offset = 0;
+/*
+	Same as my_strcmp except:
+ Only compares n chars or until the end of a string
+ */
+
+int my_strncmp(char*a, char *b, int n){
     return -1;
 }
