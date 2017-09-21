@@ -27,3 +27,4 @@ char *my_strnconcat(char *a, char *b, int n){
 		return NULL;
 	}
 }
+

@@ -15,11 +15,11 @@ int my_strcmp(char* a, char* b){
 	int total_b = 0;
 	if(a && b){
 		for(int x=0;x<my_strlen(a);x++){
-			total_a+=a;
+			total_a+= (int) a;
 		}
 
 		for(int y=0;y<my_strlen(b);y++){
-			total_b+=b;
+			total_b+= (int) b;
 		}
 
 		if(a==b){

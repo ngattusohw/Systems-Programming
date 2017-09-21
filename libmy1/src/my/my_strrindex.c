@@ -12,3 +12,4 @@ int my_strrindex(char* str, char c){
 
 	return index;
 }
+

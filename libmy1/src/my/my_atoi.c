@@ -1,12 +1,22 @@
 #include "../../include/my.h"
 
-//returns the size of a character array using a pointer to the first element of the character array
+/*
+Returns the int represented by the ascii string
+Handles negatives.
+Ignores preceding characters and trailing numbers and chars
+Examples:
+"5" => 5
+"-5" => -5
+"--5" => 5
+"a-b54sc7-d" => -54
+"abcd" => 0
+
+Between 48 and 57
+ */
 int my_atoi(char* str){
-   /* int offset = 0;
-    int count = 0;
-    while(*(ptr + offset) != '\0'){
-        count++;
-        offset++;
-    }*/
-    return 1;
+   if(str){
+
+   }else{
+
+   }
 }

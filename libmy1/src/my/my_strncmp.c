@@ -13,11 +13,11 @@ int my_strncmp(char*a, char *b, int n){
 	int total_b = 0;
 	if(a && b){
 		for(int x=0;x<length_a;x++){
-			total_a+=a;
+			total_a+= (int) a;
 		}
 
 		for(int y=0;y<length_b;y++){
-			total_b+=b;
+			total_b+= (int) b;
 		}
 
 		if(a==b){

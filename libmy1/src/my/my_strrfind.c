@@ -9,10 +9,11 @@ char* my_strrfind(char* str, char c){
 	if(str && c){
 		int index = my_strrindex(str,c);
 		if(index!=-1){
-			char* it = str[index];
+			char* it = &str[index];
 			return it;
 		}
 	}
 
 	return NULL;
 }
+

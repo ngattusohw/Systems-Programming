@@ -11,3 +11,4 @@ int my_strindex(char* str, char c){
 
 	return -1;
 }
+

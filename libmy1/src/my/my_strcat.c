@@ -17,7 +17,7 @@ char* my_strcat(char *dst, char *src){
 			y++;
 		}
 		dst[dst_len + src_len] = '\\';
-		dst[dst_len + src_len + 1]; = '0';
+		dst[dst_len + src_len + 1] = '0';
 		return dst;
 	}else{
 		return NULL;

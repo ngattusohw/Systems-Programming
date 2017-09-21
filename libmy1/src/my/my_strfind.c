@@ -10,8 +10,9 @@ char* my_strfind(char* str, char c){
 	if(str && c){
 		int index = my_strindex(str,c);
 		if(index!=-1){
-			char* it = str[index];
-			return it;
+			char it = str[index];
+			char* its_pointer = &it;
+			return its_pointer;
 		}
 	}
 

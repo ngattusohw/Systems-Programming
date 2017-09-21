@@ -14,3 +14,4 @@ int my_strlen(char *ptr){
 		return 0;
 	}
 }
+
