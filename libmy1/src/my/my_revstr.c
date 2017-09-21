@@ -11,7 +11,7 @@ int my_revstr(char* str){
 			y--;
 			x++;
 		}
-	return my_strlen(str);
+		return my_strlen(str);
 	}else{
 		return -1;
 	}

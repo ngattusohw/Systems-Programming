@@ -27,27 +27,46 @@ int main(){
 
 	// write(1,"\n",1);
 	// 
-	my_str("This is my string\n");
-	my_int(10);
+	// my_str("This is my string\n");
+	// my_int(10);
+
+	// write(1,"\n",1);
+
+	// my_num_base(10,"");
+
+	// write(1,"\n",1);
+	// my_alpha();
+
+	// write(1,"\n",1);
+
+	// my_digits();
+
+	// write(1,"\n",1);
+
+	// my_int(my_strindex("" , 'H'));
+
+	// write(1,"\n",1);
+
+	// my_int(my_strrindex("This is my string", 'i'));
+
+	// write(1,"\n",1);
+
+	// my_int(my_strlen(""));
+
+	// write(1,"\n",1);
+
+	// char hi[6];
+	// strcpy(hi,"Hello");
+
+	// my_int(my_revstr(hi));
+
+	// write(1,"\n",1);
+
+	my_int(my_strlen("Hi"));
 
 	write(1,"\n",1);
 
-	my_num_base(10,"");
-
-	write(1,"\n",1);
-	my_alpha();
-
-	write(1,"\n",1);
-
-	my_digits();
-
-	write(1,"\n",1);
-
-	my_int(my_strindex("" , 'H'));
-
-	write(1,"\n",1);
-
-	my_int(my_strrindex("This is my string", 'i'));
+	my_int(my_strlen("Hello"));
 
 	write(1,"\n",1);
 
@@ -55,10 +74,10 @@ int main(){
 
 	write(1,"\n",1);
 
-	char hi[6];
-	strcpy(hi,"Hello");
+	my_int(my_strlen(NULL));
 
-	my_int(my_revstr(hi));
+	write(1,"\n",1);
+
 
 	return(0);
 }
