@@ -62,21 +62,33 @@ int main(){
 
 	// write(1,"\n",1);
 
-	my_int(my_strlen("Hi"));
+	my_str(my_strfind("String", 's'));
 
 	write(1,"\n",1);
 
-	my_int(my_strlen("Hello"));
+	my_str(my_strrfind("Strings", 's'));
 
 	write(1,"\n",1);
 
-	my_int(my_strlen(""));
+	printf("%d \n", my_strcmp("First", "Second"));
 
 	write(1,"\n",1);
 
-	my_int(my_strlen(NULL));
+	char dest[10];
 
-	write(1,"\n",1);
+	printf("%s\n", my_strcpy(dest, "Hi"));
+
+	char hi[10];
+	printf("%s\n", my_strcat(hi, NULL));
+
+	printf("%s\n", my_strdup(NULL));
+
+	printf("%s\n", my_strconcat("NULadL", NULL));
+
+	printf("%d\n", my_atoi(NULL));
+
+
+
 
 
 	return(0);
