@@ -1,3 +1,4 @@
+#include "/../../include/list.h"
 /*
  Removes the node at index n or the last node.
  Parse once

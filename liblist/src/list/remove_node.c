@@ -1,3 +1,4 @@
+#include "/../../include/list.h"
 /* 
  Removes the given node from the list. Returns elem and frees the 
  node from memory.

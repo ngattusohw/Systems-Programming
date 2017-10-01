@@ -1,3 +1,4 @@
+#include "/../../include/list.h"
 /*
  Frees all the nodes in the list.
  CHALLENGE: Write in two lines (allowed to use other methods in 

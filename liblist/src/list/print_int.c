@@ -1,3 +1,4 @@
+#include "/../../include/list.h"
 /*
  Prints the elem of node as a in
 */

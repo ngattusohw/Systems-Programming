@@ -1,3 +1,4 @@
+#include "/../../include/list.h"
 /*
  Adds a node at index n of a list or at the end of the list if n is 
  too large.

@@ -1,3 +1,4 @@
+#include "/../../include/list.h"
 /*
  Prints all the elems as strings separated by a space
 */
