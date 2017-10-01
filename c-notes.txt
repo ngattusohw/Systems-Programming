@@ -11,3 +11,20 @@ String creation
 		Need an additonal byte for the null terminator
 
 Cannot get array length, but can get strlength ... check "man 3 string"
+
+Some useful make commands
+	cat -t Makefile
+		displays TABS, so you can see if you've messed up
+	egrep '\[] $' Makefile
+		Displays lines that have a space after \
+Debugging
+	gdb, compile gcc with -g flag, and run gdb "the runnable file"
+		list <line> prints out a view of the code
+Assert
+	Asserts only work when compiling in debug mode
+
+Exec
+	Unload the current program that ran exec, and replace it with the program you ran exec on.
+argv
+	argv is a vaibale-length, NULL terminated "vector" of strings (char *).
+
