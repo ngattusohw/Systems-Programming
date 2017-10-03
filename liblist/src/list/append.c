@@ -5,5 +5,16 @@
  Parse once
 */
 void append(struct s_node* node, struct s_node** head){
-	
+	if(node && head && node->elem){
+		s_node* current = head[0];
+		s_node* hold = current;
+		while(current!=NULL){
+			hold = current;
+			current = current->next;
+		}
+
+		hold->next = node;
+		node->prev = hold;
+
+	}
 }
