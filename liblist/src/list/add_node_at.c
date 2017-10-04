@@ -5,5 +5,11 @@
  Parse once
 */
 void add_node_at(struct s_node* node, struct s_node** head, int n){
-	
+	if(node && head){
+		s_node* hold = *head;
+		int x=0;
+		while(hold && x<){
+
+		}
+	}
 }
