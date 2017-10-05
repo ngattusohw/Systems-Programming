@@ -1,4 +1,4 @@
-#include "/../../include/list.h"
+#include "../../include/list.h"
 /*
  Adds a node to the end of a list. DO NOT add a NULL pointer or
  a node with a NULL elem.
@@ -6,8 +6,8 @@
 */
 void append(struct s_node* node, struct s_node** head){
 	if(node && head && node->elem){
-		s_node* current = head[0];
-		s_node* hold = current;
+		struct s_node* current = head[0];
+		struct s_node* hold = current;
 		while(current!=NULL){
 			hold = current;
 			current = current->next;

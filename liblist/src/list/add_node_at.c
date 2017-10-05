@@ -1,4 +1,4 @@
-#include "/../../include/list.h"
+#include "../../include/list.h"
 /*
  Adds a node at index n of a list or at the end of the list if n is 
  too large.
@@ -6,12 +6,12 @@
 */
 void add_node_at(struct s_node* node, struct s_node** head, int n){
 	if(node && head){
-		s_node* hold = *head;
+		struct s_node* hold = *head;
 		int x=0;
 		
 		while(hold->next && x<n){
 			hold = hold->next;
-			x++
+			x++;
 		}
 
 		struct s_node* the_prev = hold->prev;

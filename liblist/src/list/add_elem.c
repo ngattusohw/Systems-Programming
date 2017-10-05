@@ -7,7 +7,7 @@
 */
 void add_elem(void* elem, struct s_node** head){
 	if(elem && head){
-		struct s_node* the_node = (s_node*) malloc(sizeof(struct s_node));
+		struct s_node* the_node = (struct s_node*) malloc(sizeof(struct s_node));
 		the_node->elem = elem;
 		the_node->prev = NULL;
 		the_node->next = (*head)->next;
