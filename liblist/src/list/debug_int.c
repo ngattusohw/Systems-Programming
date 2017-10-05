@@ -9,10 +9,15 @@ void debug_int(struct s_node* head){
 		while(hold){
 			char* prev;
 			char* next;
-			if(hold->prev == NULL){
+			if(hold->prev ==NULL && hold->next==NULL){
 				prev = "(NULL ";
-			}else if(hold->next == NULL){
 				next = "NULL), ";
+			}else if(hold->prev == NULL && hold->next!=NULL){
+				prev = "(NULL ";
+				next = my_strconcat((char*) hold->next->elem,"), ");
+			}else if(hold->next == NULL && hold->prev!=NULL){
+				next = "NULL), ";
+				prev = my_strconcat("(",(char*) hold->prev->elem);
 			}else{
 				prev = my_strconcat("(",(char*) hold->prev->elem);
 				next = my_strconcat((char*) hold->next->elem,"), ");
