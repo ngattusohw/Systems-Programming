@@ -5,17 +5,22 @@
  DOES NOT PARSE.
 */
 void* remove_node(struct s_node** node){
-	if(node){
-		void* elem = node->elem;
-		s_node* previous = node->previous;
-		s_node* next = node->next;
+	if(*node){
+		if((*node)->prev){
 
-		if(previous && next){
-			previous->next = next;
-			next->prev = previous;
+		}else{
+			s_node* node = *node;
+			void* elem = node->elem;
+			s_node* previous = node->previous;
+			s_node* next = node->next;
+
+			if(previous && next){
+				previous->next = next;
+				next->prev = previous;
+			}
+
+			free(node);
+			return elem;
 		}
-
-		free(node);
-		return elem;
 	}
 }
