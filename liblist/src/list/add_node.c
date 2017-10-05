@@ -6,6 +6,9 @@
  DOES NOT PARSE
 */
 void add_node(struct s_node* node, struct s_node** head){
-
-	
+	struct s_node* the_node = *head;
+	if(the_node && node &&node->elem){
+		node->next = the_node;
+		the_node->prev = node;
+	}
 }
