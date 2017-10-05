@@ -1,9 +1,11 @@
 #include "/../../include/list.h"
+
 /*
- Adds a node at index n of a list or at the end of the list if n is 
- too large.
- Parse once
+ Inserts a node at the start of the list. DO NOT add a NULL pointer or
+ a node with a NULL elem.
+ DOES NOT PARSE
 */
-void add_node_at(struct s_node* node, struct s_node** head, int n){
+void add_node(struct s_node* node, struct s_node** head){
+
 	
 }

@@ -1,4 +1,4 @@
-fndef _MYLIST_H_
+#ifndef _MYLIST_H_
 #define _MYLIST_H_
 
 #include "my.h"
@@ -62,7 +62,7 @@ void* remove_node(struct s_node** node);
  Removes the last node from the list.
  Parse Once.
 */
-void* remove_last(struct s_node**);
+void* remove_last(struct s_node** node);
 
 /*
  Removes the node at index n or the last node.
