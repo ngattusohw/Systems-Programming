@@ -9,8 +9,9 @@ void add_node_at(struct s_node* node, struct s_node** head, int n){
 		s_node* hold = *head;
 		int x=0;
 		
-		while(hold && x<n){
+		while(hold->next && x<n){
 			hold = hold->next;
+			x++
 		}
 
 		struct s_node* the_prev = hold->prev;
