@@ -1,9 +1,22 @@
-#include "/../../include/list.h"
+#include "../../include/list.h"
+
 /*
- Adds a node at index n of a list or at the end of the list if n is 
- too large.
+ Returns a pointer to the node at index n or the last node.
  Parse once
 */
-void add_node_at(struct s_node* node, struct s_node** head, int n){
-	
+struct s_node* node_at(struct s_node* head, int n){
+	if(head){
+		struct s_node* hold = head;
+		int x=0;
+		
+		while(hold->next && x<n){
+			hold = hold->next;
+			x++;
+		}
+
+		return hold;
+
+	}else{
+		return NULL;
+	}
 }

@@ -14,11 +14,12 @@ void debug_int(struct s_node* head){
 			}else if(hold->next == NULL){
 				next = "NULL), ";
 			}else{
-				prev = "(" + hold->prev->elem;
-				next = hold->next->elem + "), ";
+				prev = my_strconcat("(",(char*) hold->prev->elem);
+				next = my_strconcat((char*) hold->next->elem,"), ");
 			}
-			char* the_string = prev + " <- " + hold->elem + " -> " + next;
-			my_str(the_string);
+			char* the_string1 = my_strconcat(prev," <- ");
+			char* the_string2 = my_strconcat(my_strconcat((char*) hold->elem," -> "),next);
+			my_str(my_strconcat(the_string1,the_string2));
 
 			hold=hold->next;
 		}
