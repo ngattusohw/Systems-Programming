@@ -7,9 +7,11 @@ Returns new string
 {"hello","world",NULL} -> "hello world"; 
  */
 char *my_vect2str(char **x){
-	if(x){
-		char* the_first = *x;
-		while(the_first!=NULL){
+	if(x && *x){
+		char* hold = *x;
+		char* total = my_strdup(hold);
+		while(hold!=NULL){
+			hold=*++x;
 			
 		}
 	}else{
