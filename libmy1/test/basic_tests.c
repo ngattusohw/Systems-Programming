@@ -62,30 +62,10 @@ int main(){
 
 	// write(1,"\n",1);
 
-	my_str(my_strfind("String", 's'));
 
-	write(1,"\n",1);
 
-	my_str(my_strrfind("Strings", 's'));
+	printf("%s\n", my_strconcat("First String", "Second String"));
 
-	write(1,"\n",1);
-
-	printf("%d \n", my_strcmp("First", "Second"));
-
-	write(1,"\n",1);
-
-	char dest[10];
-
-	printf("%s\n", my_strcpy(dest, "Hi"));
-
-	char hi[10];
-	printf("%s\n", my_strcat(hi, NULL));
-
-	printf("%s\n", my_strdup(NULL));
-
-	printf("%s\n", my_strconcat("NULadL", NULL));
-
-	printf("%d\n", my_atoi(NULL));
 
 
 
