@@ -1,5 +1,5 @@
 #include "../../include/my.h"
-
+#include <stdio.h>
 /*
 Takes a vector (array of string ended by a NULL)
 Allocates a new string and copies each string from the array into new string separated by a single space, until NULL pointer to string is found
@@ -8,13 +8,16 @@ Returns new string
  */
 char *my_vect2str(char **x){
 	if(x && *x){
-		char* hold = *x;
-		char* total = my_strdup(hold);
-		while(hold!=NULL){
-			hold=*++x;
-			
+		char* total = " ";
+		for (char* c = *x; c!=NULL; c=*++x) {
+		    total = my_strconcat(total,c);
+		    total = my_strconcat(total, " ");
+		    
 		}
+
+		printf("Hi\n");
+		return total;
 	}else{
-		return "Not a valid string!";
+		return NULL;
 	}
 }
