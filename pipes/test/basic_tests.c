@@ -5,8 +5,6 @@
 int main(){
 	char **strings = (char**)malloc(5*sizeof(char*));
     int i = 0;
-    //allocate space for each string
-    // here allocate 50 bytes, which is more than enough for the strings
     for(i = 0; i < 5; i++){
         //printf("%d\n", i);
         strings[i] = (char*)malloc(50*sizeof(char));
