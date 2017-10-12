@@ -8,14 +8,11 @@ Returns new string
  */
 char *my_vect2str(char **x){
 	if(x && *x){
-		char* total = " ";
+		char* total = my_strdup(*x);
 		for (char* c = *x; c!=NULL; c=*++x) {
 		    total = my_strconcat(total,c);
-		    total = my_strconcat(total, " ");
-		    
+		    total = my_strconcat(total," ");
 		}
-
-		printf("Hi\n");
 		return total;
 	}else{
 		return NULL;

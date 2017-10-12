@@ -1,5 +1,5 @@
 #include "../../include/my.h"
-
+#include <stdio.h>
 /*
  Allocates new memory 
  Copies concatenated strings in that new memory 
