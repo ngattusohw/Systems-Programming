@@ -29,6 +29,8 @@
 void sighup(int); /* routines child will call upon sigtrap */
 void sigint(int);
 void sigquit(int);
+void sigSTOP(int);
+void childStop(int);
 
 int main(void) {
 
@@ -37,6 +39,8 @@ int main(void) {
     signal(SIGHUP,sighup); /* set function calls */
     signal(SIGINT,sigint);
     signal(SIGQUIT, sigquit);
+
+    signal(SIGTSTP, sigSTOP);
 
     /* get child process */
     if ((pid = fork()) < 0) {
@@ -51,24 +55,39 @@ int main(void) {
 
     } else {
 
-        signal(SIGHUP, SIG_DFL);
-        signal(SIGINT, SIG_DFL);
-        signal(SIGQUIT, SIG_DFL);
+    	signal(SIGTSTP, kill(pid,SIGTSTP));
+    	while(1){
+    		printf("%s\n", "Hi");
+    		sleep(1);
+    	}
+        // signal(SIGHUP, SIG_DFL);
+        // signal(SIGINT, SIG_DFL);
+        // signal(SIGQUIT, SIG_DFL);
 
-        /* parent */
-        /* pid hold id of child */
-        printf("\nPARENT: sending SIGHUP\n\n");
-        kill(pid,SIGHUP);
-        sleep(3); /* pause for 3 secs */
-        printf("\nPARENT: sending SIGINT\n\n");
-        kill(pid,SIGINT);
-        sleep(3); /* pause for 3 secs */
-        printf("\nPARENT: sending SIGQUIT\n\n");
-        kill(pid,SIGQUIT);
-        sleep(3);
+        // /* parent */
+        // /* pid hold id of child */
+        // printf("\nPARENT: sending SIGHUP\n\n");
+        // kill(pid,SIGHUP);
+        // sleep(3); /* pause for 3 secs */
+        // printf("\nPARENT: sending SIGINT\n\n");
+        // kill(pid,SIGINT);
+        // sleep(3); /* pause for 3 secs */
+        // printf("\nPARENT: sending SIGQUIT\n\n");
+        // kill(pid,SIGQUIT);
+        // sleep(3);
     }
 
     return 0;
+}
+void childStop(int signo){
+	//kill(pid,SIGUSR1);
+	printf("%s\n", "Fuck");
+}
+
+void sigSTOP(int signo){
+	signal(SIGTSTP,sigSTOP);
+	printf("%s\n", "THIS IS MY TEST");
+	exit(1);
 }
 
 void sighup(int signo) {
