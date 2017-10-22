@@ -62,14 +62,14 @@ int main(){
 
 	// write(1,"\n",1);
 
+	//printf("%s\n", my_strconcat("First String", "Second String"));
 
+	char** the_array = my_str2vect("This is my string");
 
-	printf("%s\n", my_strconcat("First String", "Second String"));
-
-
-
-
-
+	for(int x=0;x<10;x++){
+		printf("<%s> , ", the_array[x]);
+	}
+	printf("\n");
 
 	return(0);
 }

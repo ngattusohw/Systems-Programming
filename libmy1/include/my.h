@@ -31,7 +31,7 @@ char *my_strdup(char *str);
 char *my_strconcat(char *a, char *b); 
 char *my_strnconcat(char *a, char *b, int n); 
 int my_atoi(char*);
-char *my_vect2str(char **x)
+char *my_vect2str(char **x);
 char **my_str2vect(char*); 
 
 

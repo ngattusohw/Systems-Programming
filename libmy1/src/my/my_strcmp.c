@@ -9,7 +9,9 @@ Compares strings by ascii value
  NULL is always less than a normal string
 */
 
-
+/*
+THIS IS WRONG
+ */
 int my_strcmp(char* a, char* b){
 	int total_a = 0;
 	int total_b = 0;
