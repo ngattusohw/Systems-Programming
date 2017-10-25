@@ -67,9 +67,9 @@ int main(){
 	char** the_array = my_str2vect("This is my string");
 
 	printf("TEST PRINT %s\n", the_array[0]);
-	// for(int x=0;x<10;x++){
-	// 	//printf("<%s> , ", the_array[x]);
-	// }
+	for(int x=0;x<10;x++){
+		printf("<%s> , ", the_array[x]);
+	}
 	printf("\n");
 
 	return(0);

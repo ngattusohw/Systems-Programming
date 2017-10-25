@@ -5,20 +5,18 @@
 
 int main(){
 
-	printf("MINISHELL : %s $", "FUCK");
-
-
 	while(1){
 		char cwd[1024];
 		if(getcwd(cwd, sizeof(cwd)) != NULL){
 
-			printf("MINISHELL : %s $", cwd);
+			my_str("MINISHELL: ");
+			my_str(cwd);
+			my_str("$: ");
 
 
-			// char buffc[SIZE];
-			// read(0, buffc, SIZE);
-			// my_str(buffc);
-
+			char buffc[SIZE];
+			read(0, buffc, SIZE);
+			my_str(buffc);
 
 
 		}else{

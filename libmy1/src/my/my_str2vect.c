@@ -15,26 +15,38 @@ char** my_str2vect(char* the_string){
 		char** the_array = (char**) malloc(sizeof(char*) * SIZE);
 		int array_counter = 0;
 		int hold_last_index = 0;
+		char* the_current_string = malloc(sizeof(char));
+		int the_current_string_size = 1;
+
+		the_array[0] = "MEOW";
+		
+
 		for(int x=0;x<my_strlen(the_string);x++){
 			if(the_string[x] == ' '){
-				printf("Inside of the if at %d\n", x);
-				char* the_string_to_place = (char*) malloc(sizeof(char) * (x-hold_last_index));
-				int string_to_place_counter = 0;
-				for(int y=hold_last_index;y<x;y++){
-					the_string_to_place[string_to_place_counter] = the_string[y];
-					string_to_place_counter++;
-					printf("The string to place :: %s\n", the_string_to_place);
-				}
-				the_array[array_counter] = the_string_to_place;
-				printf("%s\n", the_array[0]);
-				hold_last_index = x+1;
-				string_to_place_counter = 0;
+				printf("TESTING THE FIRST INDEX ::%s \n", the_array[0]);
+
+				//printf("ARRAY COUNTER :: %d STRING : %s\n", array_counter, the_current_string);
+				the_array[array_counter] = the_current_string;
+
 				array_counter++;
-			} 
+				hold_last_index = 0;
+				the_current_string_size = 1;
+				the_current_string = malloc(sizeof(char));
+			}else{
+				//just append to the current string by using realloc
+				the_current_string = realloc(the_current_string, ++the_current_string_size);
+				the_current_string[hold_last_index] = the_string[x];
+				hold_last_index++;
+				printf("%s\n", the_current_string);
+			}
 			//MAYBE I WANT TO CHANGE IT TO IF THERE ISNT A SPACE APPEND TO THE CURRENT STRING OF THE ARRAY INDEX,
 			//AND IF THERE IS A SPACE THEN JUST UP THE INDEX OF THE ARRAY AND THEN HAVE THE NEW SPOT TO APPEND TO THE STRING
 		}
 
+		printf("CHEESE %s %d %d\n", the_array[0], array_counter, SIZE);
+
+
+		the_array[array_counter] = the_current_string;
 		the_array[SIZE] = NULL;
 		return the_array;
 	}else{
