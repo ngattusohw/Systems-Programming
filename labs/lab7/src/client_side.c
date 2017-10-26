@@ -5,6 +5,7 @@
 #include <netinet/in.h>
 #include <netdb.h>
 #include <strings.h>
+#include <unistd.h>
 
 void error(char *msg){
 	perror(msg);
@@ -18,7 +19,7 @@ int main(int argc, char *argv[]){
 
 	char buffer[256];
 	if (argc < 3){
-		fprintf(stderr,"usage %s hostname port", argv[0]);
+		fprintf(stderr,"usage %s hostname port message", argv[0]);
 		exit(0);
 	}
 	portno = atoi(argv[2]);
@@ -46,7 +47,19 @@ int main(int argc, char *argv[]){
 		error("ERROR connecting");
 	}else{
 		printf("%s\n", "Connected!");
-	}
-  	
+		n = write(sockfd,argv[3],strlen(argv[3]));
+		if (n < 0){
+			error("ERROR writing to socket");
+		}else{
+			printf("%s\n", "Completed!");
+			bzero(buffer,256);
+			n = read(sockfd,buffer,255);
+			if (n < 0){
+				error("ERROR reading from socket");
+			}
+			printf("%s\n",buffer);
+		}
 
+	}
+	return 0;
 }
