@@ -31,4 +31,36 @@ argv
 extern keyword
 	need to look over
 
-`
+SOCKET
+	#include <sys/socket.h>
+
+	int socket(int domain, int type, int protocol);
+		domain - type of domain
+		type - type of domain
+		protocol - tpye of protocol, using a 0 causes socket to use an unspecified default protocol for the requested socket type
+
+		Domain
+			AF_INET (IPv4)
+			AF_INET6 (IPv6)
+
+		TYPE
+			SOCK_STREAM (TCP) GOOD
+				Provides sequenced, reliable, bidirectional, connection-mode byte streams, and may provide a transmission mechanism for out-of-band data.
+			SOCK_DGRAM (UDP) MEH
+				Provides datagrams, which are connectionless-mode, unreliable messages of fixed maximum length.
+			SOCK_SEQPACKET
+				Provides sequenced, reliable, bidirectional, connection-mode transmission paths for records. A record can be sent using one or more output operations and received using one or more input operations, but a single operation never transfers part of more than one record. Record boundaries are visible to the receiver via the MSG_EOR flag.
+
+			Return vals
+				Upon successful completion, socket() shall return a non-negative integer, the socket file descriptor. Otherwise, a value of -1 shall be returned and errno set to indicate the error.
+
+	Dont forget about big and little edian, and figure out which youre using. Flip respectivley
+
+	Client Side:
+		gethostbyname -- extremely outdated
+		connect is blocking
+	http://www.linuxhowtos.org/C_C++/socket.htm		
+
+
+
+
