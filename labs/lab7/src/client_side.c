@@ -12,6 +12,15 @@ void error(char *msg){
 	exit(0);
 }
 
+void getOutPutFromServer(int sockfd, char* buffer){
+	
+	int n = read(sockfd,buffer,255);
+	if (n < 0){
+		error("ERROR reading from socket");
+	}
+	printf("%s\n",buffer);
+}
+
 int main(int argc, char *argv[]){
 	int sockfd, portno, n;
 	struct sockaddr_in serv_addr;
@@ -27,39 +36,51 @@ int main(int argc, char *argv[]){
 	sockfd = socket(AF_INET, SOCK_DGRAM, 0);
 	
 	if (sockfd < 0){
-		error("ERROR opening socket");
-	}
-
-	server = gethostbyname(argv[1]);
-	if (server == NULL){
-		fprintf(stderr,"ERROR, no such host");
-		exit(0);
-	}
-
-	bzero((char *) &serv_addr, sizeof(serv_addr));
-	serv_addr.sin_family = AF_INET;
-	bcopy((char *)server->h_addr,
-		(char *)&serv_addr.sin_addr.s_addr,
-		server->h_length);
-	serv_addr.sin_port = htons(portno);
-
-	if (connect(sockfd,&serv_addr,sizeof(serv_addr)) < 0){
-		error("ERROR connecting");
+		error("err opening socket");
 	}else{
-		printf("%s\n", "Connected!");
-		n = write(sockfd,argv[3],strlen(argv[3]));
-		if (n < 0){
-			error("ERROR writing to socket");
-		}else{
-			printf("%s\n", "Completed!");
-			bzero(buffer,256);
-			n = read(sockfd,buffer,255);
-			if (n < 0){
-				error("ERROR reading from socket");
-			}
-			printf("%s\n",buffer);
+		server = gethostbyname(argv[1]);
+		if (server == NULL){
+			fprintf(stderr,"err, no host");
+			exit(0);
 		}
 
+		bzero((char *) &serv_addr, sizeof(serv_addr));
+		serv_addr.sin_family = AF_INET;
+		bcopy((char *)server->h_addr,
+			(char *)&serv_addr.sin_addr.s_addr,
+			server->h_length);
+		serv_addr.sin_port = htons(portno);
+
+		if (connect(sockfd,&serv_addr,sizeof(serv_addr)) < 0){
+			error("err connecting");
+		}else{
+			printf("%s\n", "Connected!");
+			n = write(sockfd,argv[3],strlen(argv[3]));
+			if (n < 0){
+				error("err writing");
+			}else{
+				printf("%s\n", "Completed!");
+				
+				bzero(buffer,256);
+				n = read(sockfd,buffer,255);
+				if (n < 0){
+					error("ERROR reading from socket");
+				}
+				printf("%s\n",buffer);
+
+				bzero(buffer,256);
+				int m = read(sockfd,buffer,255);
+				if (m < 0){
+					error("ERROR reading from socket");
+				}
+				printf("%s\n",buffer);
+
+
+				//getOutPutFromServer(sockfd,buffer);
+
+			}
+
+		}
 	}
 	return 0;
 }
