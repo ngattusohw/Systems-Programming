@@ -16,8 +16,8 @@ int main(int argc, char *argv[]){
     ssize_t nread;
     char buf[BUF_SIZE];
 
-	if (argc < 2) {
-	    fprintf(stderr, "Usage: %s host port\n", argv[0]);
+	if (argc < 3) {
+	    fprintf(stderr, "Usage: %s host port msg\n", argv[0]);
 	    exit(EXIT_FAILURE);
 	}
 
@@ -67,29 +67,29 @@ int main(int argc, char *argv[]){
 
 
 
-	// for (j = 3; j < argc; j++) {
-	//     len = strlen(argv[j]) + 1;
-	//             /* +1 for terminating null byte */
+	for (j = 3; j < argc; j++) {
+	    len = strlen(argv[j]) + 1;
+	            /* +1 for terminating null byte */
 
-	//    if (len + 1 > BUF_SIZE) {
-	//         fprintf(stderr,
-	//                 "Ignoring long message in argument %d\n", j);
-	//         continue;
-	//     }
+	   if (len + 1 > BUF_SIZE) {
+	        fprintf(stderr,
+	                "Ignoring long message in argument %d\n", j);
+	        continue;
+	    }
 
-	//    if (write(sfd, argv[j], len) != len) {
-	//         fprintf(stderr, "partial/failed write\n");
-	//         exit(EXIT_FAILURE);
-	//     }
+	   if (write(sfd, argv[j], len) != len) {
+	        fprintf(stderr, "partial/failed write\n");
+	        exit(EXIT_FAILURE);
+	    }
 
-	//    nread = read(sfd, buf, BUF_SIZE);
-	//     if (nread == -1) {
-	//         perror("read");
-	//         exit(EXIT_FAILURE);
-	//     }
+	   nread = read(sfd, buf, BUF_SIZE);
+	    if (nread == -1) {
+	        perror("read");
+	        exit(EXIT_FAILURE);
+	    }
 
-	//    printf("Received %ld bytes: %s\n", (long) nread, buf);
-	// }
+	   printf("Received %ld bytes: %s\n", (long) nread, buf);
+	}
 
 	exit(EXIT_SUCCESS);
 }
