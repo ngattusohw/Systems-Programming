@@ -4,18 +4,29 @@ LIBDIR = ../../lib/
 LIBS = -lmy
 CFLAGS = -I$(IDIR) -Wall -Werror --pedantic -std=c99 
 CC = gcc
-SRCS = $(wildcard $(SRCDIR)/*.c)
-OBJS = $(SRCS:.c=.o)
+CSRCS = $(wildcard $(SRCDIR)/client.c)
+SSRCS = $(wildcard $(SRCDIR)/server.c)
+COBJS = $(CSRCS:.c=.o)
+SOBJS = $(SSRCS:.c=.o)
 
 .PHONY: re fclean clean all
 
-all: $(OBJS)
-	@$(CC) $(CFLAGS) -L$(LIBDIR) $^ $(LIBS) -o minishell
+all: 
+	@$(CC) $(CFLAGS) client.c -o client
+	@$(CC) $(CFLAGS) server.c -o server
+
+client: $(COBJS)
+	@$(CC) $(CFLAGS) -o client
+
+server: $(SOBJS)
+	@$(CC) $(CFLAGS) -o server
 
 clean:
-	rm -f $(OBJS)
+	rm -f $(COBJS)
+	rm -f $(SOBJS)
 
 fclean: clean
-	rm -f minishell
+	rm -f client
+	rm -f server
 
 re: fclean all
