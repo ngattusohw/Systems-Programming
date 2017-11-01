@@ -15,11 +15,15 @@ int main(int argc, char *argv[]){
     size_t len;
     ssize_t nread;
     char buf[BUF_SIZE];
+    char username[BUF_SIZE];
 
 	if (argc < 3) {
 	    fprintf(stderr, "Usage: %s host port msg\n", argv[0]);
 	    exit(EXIT_FAILURE);
 	}
+
+	printf("%s", "Please enter a username::");
+	scanf("%s",username);
 
 	/* Obtain address(es) matching host/port */
 
@@ -77,6 +81,7 @@ int main(int argc, char *argv[]){
 	        continue;
 	    }
 
+	   printf("SENDING :: %s\n", argv[j]);
 	   if (write(sfd, argv[j], len) != len) {
 	        fprintf(stderr, "partial/failed write\n");
 	        exit(EXIT_FAILURE);
