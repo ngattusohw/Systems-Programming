@@ -112,9 +112,8 @@ int main(int argc, char *argv[]){
 	    }
 
 	    /* check which fd is avaialbe for read */
-	    for (int fd = 0; fd <= fdmax; fd++) {
+	    for (int fd = 0; fd <= fdmax+1; fd++) {
 	        if (FD_ISSET(fd, &dup)) {
-	        	printf("Infinite loop%d\n", fd);
 	            if (fd == 0) {
 	            	//printf("%s:", username);
 	            	char input[500];
@@ -125,13 +124,14 @@ int main(int argc, char *argv[]){
 				        exit(EXIT_FAILURE);
 				    }
 	                //handle_command();
-	            }
-	            else if (fd == sfd) {
-	                printf("SERVER\n");
+	            }else if (fd == sfd) {
+	            	char input[500];
+	                fgets(input, sizeof(input), sfd);
+	                printf("%s\n", input);
+	                break;
 
 	                //handle_new_connection();
-	            }
-	            else {
+	            }else {
 	            	printf("%s\n", "Not the server :(");
 	                //handle_message(fd);
 	            }
