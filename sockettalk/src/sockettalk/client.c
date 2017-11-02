@@ -29,8 +29,8 @@ int main(int argc, char *argv[]){
 
 	memset(&hints, 0, sizeof(struct addrinfo));
 	hints.ai_family = AF_INET;    /* Allow IPv4 or IPv6 */
-	hints.ai_socktype = SOCK_DGRAM; /* Datagram socket */
-	hints.ai_flags = 0;
+	hints.ai_socktype = SOCK_STREAM; /* Datagram socket */
+	hints.ai_flags = AI_PASSIVE;
 	hints.ai_protocol = 0;          /* Any protocol */
 
 
@@ -51,8 +51,10 @@ int main(int argc, char *argv[]){
 	    if (sfd == -1)
 	        continue;
 
-	   if (connect(sfd, rp->ai_addr, rp->ai_addrlen) != -1)
+	   if (connect(sfd, rp->ai_addr, rp->ai_addrlen) != -1){
+	   		printf("%s\n", "Connected!");
 	        break;                  /* Success */
+	   }
 
 	   close(sfd);
 	}

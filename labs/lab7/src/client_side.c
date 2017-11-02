@@ -51,7 +51,7 @@ int main(int argc, char *argv[]){
 			server->h_length);
 		serv_addr.sin_port = htons(portno);
 
-		if (connect(sockfd,&serv_addr,sizeof(serv_addr)) < 0){
+		if (connect(sockfd,(struct sockaddr *) &serv_addr,sizeof(serv_addr)) < 0){
 			error("err connecting");
 		}else{
 			printf("%s\n", "Connected!");
@@ -61,21 +61,16 @@ int main(int argc, char *argv[]){
 			}else{
 				printf("%s\n", "Completed!");
 				
-				bzero(buffer,256);
-				n = read(sockfd,buffer,255);
-				if (n < 0){
-					error("ERROR reading from socket");
+				for(;;){
+					bzero(buffer,256);
+					n = read(sockfd,buffer,255);
+					if (n < 0){
+						//error("ERROR reading from socket");
+					}else{
+						printf("%s\n",buffer);
+					}
+					
 				}
-				printf("%s\n",buffer);
-
-				bzero(buffer,256);
-				int m = read(sockfd,buffer,255);
-				if (m < 0){
-					error("ERROR reading from socket");
-				}
-				printf("%s\n",buffer);
-
-
 				//getOutPutFromServer(sockfd,buffer);
 
 			}
