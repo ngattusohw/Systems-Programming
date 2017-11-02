@@ -13,7 +13,7 @@ SOBJS = $(SSRCS:.c=.o)
 
 all: 
 	@$(CC) $(CFLAGS) client.c -o client
-	@$(CC) $(CFLAGS) server.c -o server
+	@$(CC) $(CFLAGS) new_server.c -o server
 
 client: $(COBJS)
 	@$(CC) $(CFLAGS) -o client

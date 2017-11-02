@@ -11,7 +11,7 @@
 int main(int argc, char *argv[]){
 	struct addrinfo hints;
     struct addrinfo *result, *rp;
-    int sfd, s, j;
+    int sfd, s;
     size_t len;
     ssize_t nread;
     char buf[BUF_SIZE];
@@ -23,7 +23,7 @@ int main(int argc, char *argv[]){
 	}
 
 	printf("%s", "Please enter a username::");
-	scanf("%s",username);
+	scanf("%s",username); //need to make sure to do the realloc thing here
 
 	/* Obtain address(es) matching host/port */
 
@@ -69,27 +69,48 @@ int main(int argc, char *argv[]){
 	/* Send remaining command-line arguments as separate
 	   datagrams, and read responses from server */
 
+	//sending username to the server
+	//First establish the new client to the server.. might not need this
+	// if (write(sfd, " ", len) != len){
+	//         fprintf(stderr, "partial/failed write\n");
+	//         exit(EXIT_FAILURE);
+	// }
+	char slash[50];
+	strcpy(slash,  "/nick ");
+	strcat(slash, username);
+	len = strlen(slash) + 1;
+
+	if (write(sfd, slash, len) != len){
+	        fprintf(stderr, "partial/failed write\n");
+	        exit(EXIT_FAILURE);
+	}
+
 	//Do while loop here for the chat message stuff
 
+	//MY CURRENT PROBLEM IS THAT THE CLIENT HAS TO LISTEN FOR MESSAGES FROM THE SERVER
+	//WHILE ALSO LISTENING FOR NEW MESSAGES FROM THE USER
 
 
-	for (j = 3; j < argc; j++) {
-	    len = strlen(argv[j]) + 1;
+	char message_buff[500];
+	for (;;) {
+		scanf("%s",message_buff);
+	    len = strlen(message_buff) + 1;
 	            /* +1 for terminating null byte */
 
 	   if (len + 1 > BUF_SIZE) {
 	        fprintf(stderr,
-	                "Ignoring long message in argument %d\n", j);
+	                "Ignoring long message in argument\n");
 	        continue;
 	    }
 
-	   printf("SENDING :: %s\n", argv[j]);
-	   if (write(sfd, argv[j], len) != len) {
+	   printf("SENDING :: %s\n", message_buff);
+	   if (write(sfd, message_buff, len) != len) {
 	        fprintf(stderr, "partial/failed write\n");
 	        exit(EXIT_FAILURE);
 	    }
 
 	   nread = read(sfd, buf, BUF_SIZE);
+	   printf("THIS IS NREAD %zd\n", nread);
 	    if (nread == -1) {
 	        perror("read");
 	        exit(EXIT_FAILURE);

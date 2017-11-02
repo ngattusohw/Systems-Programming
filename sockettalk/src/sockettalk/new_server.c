@@ -139,7 +139,17 @@ int main(void){
                         close(i); // bye!
                         FD_CLR(i, &master); // remove from master set
                     } else {
-                        printf("%s\n", "We got");
+                        printf("%s %s\n", "We got ::",buf);
+                        if(strncmp("/",buf,1)==0){
+                            printf("%s\n", "There is a slash!");
+                            const char ch = '/';
+                            char *ret;
+
+                            ret = strchr(buf, ch);
+                            printf("RET:: %s\n", ret);
+                        }else{
+                            //stuff
+                        }
                         // we got some data from a client
                         for(j = 0; j <= fdmax; j++) {
                             // send to everyone!
@@ -160,3 +170,5 @@ int main(void){
     
     return 0;
 }
+
+
