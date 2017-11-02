@@ -12,7 +12,7 @@
 #include <arpa/inet.h>
 #include <netdb.h>
 
-#define PORT "9034"   // port we're listening on
+#define PORT argv[1]   // port we're listening on
 
 // get sockaddr, IPv4 or IPv6:
 void *get_in_addr(struct sockaddr *sa)
@@ -24,7 +24,13 @@ void *get_in_addr(struct sockaddr *sa)
     return &(((struct sockaddr_in6*)sa)->sin6_addr);
 }
 
-int main(void){
+int main(int argc, char *argv[]){
+
+    if (argc!=2) {
+        fprintf(stderr, "Usage: %s port\n", argv[0]);
+        exit(EXIT_FAILURE);
+    }
+
     fd_set master;    // master file descriptor list
     fd_set read_fds;  // temp file descriptor list for select()
     int fdmax;        // maximum file descriptor number

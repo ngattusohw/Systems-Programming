@@ -89,7 +89,7 @@ int main(int argc, char *argv[]){
 
 	//MY CURRENT PROBLEM IS THAT THE CLIENT HAS TO LISTEN FOR MESSAGES FROM THE SERVER
 	//WHILE ALSO LISTENING FOR NEW MESSAGES FROM THE USER
-
+	//just use select again..
 
 	char message_buff[500];
 	for (;;) {
