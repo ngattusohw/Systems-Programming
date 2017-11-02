@@ -87,6 +87,44 @@ int main(int argc, char *argv[]){
 
 	//Do while loop here for the chat message stuff
 
+	fd_set rfds;
+    struct timeval tv;
+
+    /* Watch stdin (fd 0) to see when it has input. */
+    FD_ZERO(&rfds);
+    FD_SET(0, &rfds);
+    FD_SET(sfd, &rfds);
+
+    /* Wait up to five seconds. */
+    tv.tv_sec = 5;
+    tv.tv_usec = 0;
+
+    /* back up master */
+    fd_set dup = rfds;
+
+    /* note the max_fd+1 */
+    if (select(3, &dup, NULL, NULL, NULL) < 0) {
+        perror("select");
+        return -1;
+    }
+
+    /* check which fd is avaialbe for read */
+    for (int fd = 0; fd <= 2; fd++) {
+        if (FD_ISSET(fd, &dup)) {
+            if (fd == 0) {
+            	printf("%s\n", "KEYBOARD");
+                //handle_command();
+            }
+            else if (fd == sfd) {
+                printf("SERVER\n");
+                //handle_new_connection();
+            }
+            else {
+                //handle_message(fd);
+            }
+        }
+    }
+
 	//MY CURRENT PROBLEM IS THAT THE CLIENT HAS TO LISTEN FOR MESSAGES FROM THE SERVER
 	//WHILE ALSO LISTENING FOR NEW MESSAGES FROM THE USER
 	//just use select again..
