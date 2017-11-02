@@ -150,7 +150,6 @@ int main(int argc, char *argv[]){
                             printf("%s\n", "There is a slash!");
                             const char ch = '/';
                             char *ret;
-
                             ret = strchr(buf, ch);
                             printf("RET:: %s\n", ret);
                         }else{
@@ -164,6 +163,8 @@ int main(int argc, char *argv[]){
                                 if (j != listener && j != i) {
                                     if (send(j, buf, nbytes, 0) == -1) {
                                         perror("send");
+                                    }else{
+                                        printf("%s %s %s %d\n", "Sent ", buf, "to ", j);
                                     }
                                 }
                             }

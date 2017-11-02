@@ -13,8 +13,8 @@ int main(int argc, char *argv[]){
     struct addrinfo *result, *rp;
     int sfd, s;
     size_t len;
-    ssize_t nread;
-    char buf[BUF_SIZE];
+    //ssize_t nread;
+    //char buf[BUF_SIZE];
     char username[BUF_SIZE];
 
 	if (argc < 3) {
@@ -52,7 +52,7 @@ int main(int argc, char *argv[]){
 	        continue;
 
 	   if (connect(sfd, rp->ai_addr, rp->ai_addrlen) != -1){
-	   		printf("%s\n", "Connected!");
+	   		printf("%s %d\n", "Connected! ", sfd );
 	        break;                  /* Success */
 	   }
 
@@ -80,6 +80,8 @@ int main(int argc, char *argv[]){
 	strcat(slash, username);
 	len = strlen(slash) + 1;
 
+	
+
 	if (write(sfd, slash, len) != len){
 	        fprintf(stderr, "partial/failed write\n");
 	        exit(EXIT_FAILURE);
@@ -88,7 +90,9 @@ int main(int argc, char *argv[]){
 	//Do while loop here for the chat message stuff
 
 	fd_set rfds;
-    struct timeval tv;
+	fd_set dup;
+	int fdmax=sfd;
+    //struct timeval tv;
 
     /* Watch stdin (fd 0) to see when it has input. */
     FD_ZERO(&rfds);
@@ -96,66 +100,76 @@ int main(int argc, char *argv[]){
     FD_SET(sfd, &rfds);
 
     /* Wait up to five seconds. */
-    tv.tv_sec = 5;
-    tv.tv_usec = 0;
 
-    /* back up master */
-    fd_set dup = rfds;
+    for(;;){
+	    /* back up master */
+	    dup = rfds;
+	    
+	    /* note the max_fd+1 */
+	    if (select(fdmax+1, &dup, NULL, NULL, NULL) < 0) {
+	        perror("select");
+	        return -1;
+	    }
 
-    /* note the max_fd+1 */
-    if (select(3, &dup, NULL, NULL, NULL) < 0) {
-        perror("select");
-        return -1;
-    }
+	    /* check which fd is avaialbe for read */
+	    for (int fd = 0; fd <= fdmax; fd++) {
+	        if (FD_ISSET(fd, &dup)) {
+	        	printf("Infinite loop%d\n", fd);
+	            if (fd == 0) {
+	            	//printf("%s:", username);
+	            	char input[500];
+	            	fgets(input, sizeof(input), stdin);
+	            	len = strlen(input) + 1;
+	            	if (write(sfd, input, len) != len) {
+				        fprintf(stderr, "partial/failed write\n");
+				        exit(EXIT_FAILURE);
+				    }
+	                //handle_command();
+	            }
+	            else if (fd == sfd) {
+	                printf("SERVER\n");
 
-    /* check which fd is avaialbe for read */
-    for (int fd = 0; fd <= 2; fd++) {
-        if (FD_ISSET(fd, &dup)) {
-            if (fd == 0) {
-            	printf("%s\n", "KEYBOARD");
-                //handle_command();
-            }
-            else if (fd == sfd) {
-                printf("SERVER\n");
-                //handle_new_connection();
-            }
-            else {
-                //handle_message(fd);
-            }
-        }
-    }
+	                //handle_new_connection();
+	            }
+	            else {
+	            	printf("%s\n", "Not the server :(");
+	                //handle_message(fd);
+	            }
+	        }
+	    }
+	}
 
 	//MY CURRENT PROBLEM IS THAT THE CLIENT HAS TO LISTEN FOR MESSAGES FROM THE SERVER
 	//WHILE ALSO LISTENING FOR NEW MESSAGES FROM THE USER
 	//just use select again..
 
-	char message_buff[500];
-	for (;;) {
-		scanf("%s",message_buff);
-	    len = strlen(message_buff) + 1;
-	            /* +1 for terminating null byte */
+	// char message_buff[500];
+	// for (;;) {
+	// 	scanf("%s",message_buff);
+	//     len = strlen(message_buff) + 1;
+	//             /* +1 for terminating null byte */
 
-	   if (len + 1 > BUF_SIZE) {
-	        fprintf(stderr,
-	                "Ignoring long message in argument\n");
-	        continue;
-	    }
+	//    if (len + 1 > BUF_SIZE) {
+	//         fprintf(stderr,
+	//                 "Ignoring long message in argument\n");
+	//         continue;
+	//     }
 
-	   printf("SENDING :: %s\n", message_buff);
-	   if (write(sfd, message_buff, len) != len) {
-	        fprintf(stderr, "partial/failed write\n");
-	        exit(EXIT_FAILURE);
-	    }
+	//    printf("SENDING :: %s\n", message_buff);
+	//    if (write(sfd, message_buff, len) != len) {
+	//         fprintf(stderr, "partial/failed write\n");
+	//         exit(EXIT_FAILURE);
+	//     }
 
-	   nread = read(sfd, buf, BUF_SIZE);
-	   printf("THIS IS NREAD %zd\n", nread);
-	    if (nread == -1) {
-	        perror("read");
-	        exit(EXIT_FAILURE);
-	    }
+	//    nread = read(sfd, buf, BUF_SIZE);
+	//    printf("THIS IS NREAD %zd\n", nread);
+	//     if (nread == -1) {
+	//         perror("read");
+	//         exit(EXIT_FAILURE);
+	//     }
 
-	   printf("Received %ld bytes: %s\n", (long) nread, buf);
-	}
+	//    printf("Received %ld bytes: %s\n", (long) nread, buf);
+	// }
 
 	exit(EXIT_SUCCESS);
 }
