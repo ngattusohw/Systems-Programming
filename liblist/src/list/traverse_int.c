@@ -7,7 +7,7 @@ void traverse_int(struct s_node* head){
 		struct s_node* hold = head;
 		
 		while(hold){
-			my_int((int) hold->elem);
+			my_int(*((int*)hold->elem));
 			hold = hold->next;
 		}
 	}

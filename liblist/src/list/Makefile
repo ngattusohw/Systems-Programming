@@ -21,3 +21,4 @@ clean:
 	rm -f $(OBJS)
 fclean: clean
 	rm -f ../../lib/liblist.a
+re: clean all

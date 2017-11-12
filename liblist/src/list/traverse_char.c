@@ -7,7 +7,7 @@ void traverse_char(struct s_node* head){
 		struct s_node* hold = head;
 		
 		while(hold){
-			my_char((char) hold->elem);
+			my_char(*((char*)hold->elem));
 			hold = hold->next;
 		}
 	}
