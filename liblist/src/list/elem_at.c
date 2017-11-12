@@ -1,4 +1,5 @@
-#include "../../include/list.h"
+#include "list.h"
+#include <stdio.h>
 /*
  Returns a pointer to the elem at index n or the last node.
  Parse once.
@@ -12,7 +13,7 @@ void* elem_at(struct s_node* head, int n){
 			hold = hold->next;
 			x++;
 		}
-		
+		printf("%p\n",hold->elem);		
 		return hold->elem;
 
 	}else{
