@@ -128,18 +128,8 @@ int main(void){
 			// case 17:
 			// 	endwin();
 			// 	exit(0);
-			case 127:
+			case 127: //handle backspace/deleting characters
 				if(the_command_iterator!=0){
-					// memmove(&the_command[the_command_iterator],
-					// 	&the_command[the_command_iterator + 1],
-					// 	strlen(the_command) - the_command_iterator);
-					// the_command_iterator--;
-						
-					// addstr("\n");
-					// attroff(COLOR_PAIR(3));
-					// printMessage(); // we should do this last
-					// attron(COLOR_PAIR(3));
-
 					//this works but it actually sucks lol
 					char new_str[the_command_iterator-1];
 					memset(new_str, 0, the_command_iterator);
@@ -148,9 +138,14 @@ int main(void){
 					the_command_iterator-=1;
 					//addstr(the_command);
 					int x,y;
-
 					getyx(w,y,x);
-					mvwdelch(w,y,x-1);
+					
+					if(x==0){
+						mvwdelch(w,y-1,getmaxx(w)-1);
+					}else{
+						mvwdelch(w,y,x-1);
+					}
+					
 
 				}
 				break;
