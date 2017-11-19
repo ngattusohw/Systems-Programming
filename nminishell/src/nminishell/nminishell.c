@@ -25,6 +25,7 @@ int main(void){
 	w=initscr();
 	noecho();
 	start_color(); // must be called to use colors
+	scrollok(w,true);
 	init_pair(1,COLOR_GREEN,COLOR_BLUE);
 	init_pair(2,COLOR_BLACK,COLOR_WHITE);
 	init_pair(3,COLOR_WHITE,COLOR_BLACK);
