@@ -3,6 +3,8 @@
 #include <term.h>
 #include <ncurses.h>
 #include <string.h>
+#include <unistd.h>
+
 
 void printMessage(){
 	attron(COLOR_PAIR(1));
@@ -22,6 +24,8 @@ int main(void){
 
 	WINDOW *w;
 	char c;
+	int y,x;
+	int cursorOffset=0;
 	w=initscr();
 	noecho();
 	start_color(); // must be called to use colors
@@ -128,6 +132,46 @@ int main(void){
 			// case 17:
 			// 	endwin();
 			// 	exit(0);
+			case 1: // CTRL A
+				addch('B');
+				break;
+			case 20: //CTRL T Test
+				break;
+			case 27: //means its an arrow key
+				getch(); //flush the next '['
+				switch(getch()){
+					case 65: //Up arrow
+						addch('A');
+						break;
+					case 66: //Down arrow
+						addch('B');
+						break;
+					case 67: //Right
+						//have to take into account y values, also for left.
+						//also need to see like ranges
+						getyx(w,y,x);
+						if(cursorOffset<the_command_iterator && x!=getmaxx(w)-1){
+							wmove(w,y,x+1);
+							cursorOffset++;
+						}else if(x==getmaxx(w)-1){
+							wmove(w,y+1,0);
+							cursorOffset++;
+						}
+						break;
+					case 68: //Left
+						getyx(w,y,x);
+						if(cursorOffset!=0  && x!=0){
+							wmove(w,y,x-1);
+							cursorOffset--;
+						}else if(x==0){
+							wmove(w,y-1,getmaxx(w)-1);
+							cursorOffset--;
+						}
+						break;
+					default: // I have no clue lol
+						break;
+				}
+				break;
 			case 127: //handle backspace/deleting characters
 				if(the_command_iterator!=0){
 					//this works but it actually sucks lol
@@ -136,8 +180,8 @@ int main(void){
 					strncpy(new_str,the_command,the_command_iterator-1);
 					strncpy(the_command,new_str,the_command_iterator);
 					the_command_iterator-=1;
+					cursorOffset--;
 					//addstr(the_command);
-					int x,y;
 					getyx(w,y,x);
 					
 					if(x==0){
@@ -161,6 +205,7 @@ int main(void){
 			default:
 				the_command[the_command_iterator] = c;
 				the_command_iterator++;
+				cursorOffset++;
 				addch(c);
 		}
 	}

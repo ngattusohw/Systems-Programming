@@ -1,8 +1,8 @@
 SRCDIR = ./
-IDIR = ../../include/
+IDIR = /../../include/
 LIBDIR = ../../lib/
 LIBS = -lmy
-CFLAGS = -I$(IDIR) -Wall -Werror --pedantic -std=c99 
+CFLAGS = -I $(IDIR) -Wall -Werror --pedantic -std=c99 
 CC = gcc
 SRCS = $(wildcard $(SRCDIR)/*.c)
 OBJS = $(SRCS:.c=.o)
@@ -10,12 +10,12 @@ OBJS = $(SRCS:.c=.o)
 .PHONY: re fclean clean all
 
 all: $(OBJS)
-	@$(CC) $(CFLAGS) -L$(LIBDIR) $^ $(LIBS) -o minishell
+	@$(CC) $(CFLAGS) -L $(LIBDIR) $^ $(LIBS) -lncurses -o nminishell
 
 clean:
 	rm -f $(OBJS)
 
 fclean: clean
-	rm -f minishell
+	rm -f nminishell
 
 re: fclean all
