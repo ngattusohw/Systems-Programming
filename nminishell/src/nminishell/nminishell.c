@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <term.h>
 #include <ncurses.h>
+#include <string.h>
 
 void printMessage(){
 	attron(COLOR_PAIR(1));
@@ -126,6 +127,32 @@ int main(void){
 			// case 17:
 			// 	endwin();
 			// 	exit(0);
+			case 127:
+				if(the_command_iterator!=0){
+					// memmove(&the_command[the_command_iterator],
+					// 	&the_command[the_command_iterator + 1],
+					// 	strlen(the_command) - the_command_iterator);
+					// the_command_iterator--;
+						
+					// addstr("\n");
+					// attroff(COLOR_PAIR(3));
+					// printMessage(); // we should do this last
+					// attron(COLOR_PAIR(3));
+
+					//this works but it actually sucks lol
+					char new_str[the_command_iterator-1];
+					memset(new_str, 0, the_command_iterator);
+					strncpy(new_str,the_command,the_command_iterator-1);
+					strncpy(the_command,new_str,the_command_iterator);
+					the_command_iterator-=1;
+					//addstr(the_command);
+					int x,y;
+
+					getyx(w,y,x);
+					mvwdelch(w,y,x-1);
+
+				}
+				break;
 			case '\n':
 				memset(the_command, 0, sizeof the_command);
 				the_command_iterator=0;
