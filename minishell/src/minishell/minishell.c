@@ -18,7 +18,7 @@ int main(){
 			read(0, buffc, SIZE);
 			//my_str(buffc);
 			char** what_to_do = my_str2vect(buffc);
-
+			//printf("%s\n", );
 			if(my_strcmp(what_to_do[0],"cd") == 0){
 				if(what_to_do[1]){
 					if(chdir(what_to_do[1])==-1){

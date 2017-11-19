@@ -32,9 +32,7 @@ int main(void){
 	char c;
 	w=initscr();
 	noecho();
-
-
-	start_color();
+	start_color(); //must be called to use colors
 	init_pair(1,COLOR_GREEN,COLOR_WHITE);
 	init_pair(2,COLOR_BLACK,COLOR_WHITE);
 	init_pair(3,COLOR_WHITE,COLOR_BLACK);
@@ -45,7 +43,7 @@ int main(void){
 		//printf("%s\n", "Sample text");
 		switch(c){
 			case 2:
-				setupterm(NULL, fileno(stdout), (int *)0);
+				//setupterm(NULL, fileno(stdout), (int *)0);
 				if(toggles[2]==0){
 					//bold = tigetstr("smso");
 					//putp(bold);
