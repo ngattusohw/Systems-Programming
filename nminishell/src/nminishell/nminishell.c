@@ -28,6 +28,7 @@ int main(void){
 	int cursorOffset=0;
 	w=initscr();
 	noecho();
+	//raw(); //line buffering disabled
 	start_color(); // must be called to use colors
 	scrollok(w,true);
 	init_pair(1,COLOR_GREEN,COLOR_BLUE);
@@ -135,6 +136,22 @@ int main(void){
 			case 1: // CTRL A
 				addch(cursorOffset);
 				break;
+			case 12:
+			{
+				//CTRL L, clear terminal except for current command
+				//chtype* the_line;
+				chtype* the_thing;
+				the_thing = calloc((getmaxx(w)+1),sizeof(chtype));
+
+				getyx(w,y,x);
+				mvinchstr(y,0,the_thing);
+				clear();
+
+				addchstr(the_thing);
+				wmove(w,0,x);
+
+				break;
+			}
 			case 20: //CTRL T Test
 				addstr(the_command);
 				break;
@@ -148,8 +165,6 @@ int main(void){
 						addch('B');
 						break;
 					case 67: //Right
-						//have to take into account y values, also for left.
-						//also need to see like ranges
 						getyx(w,y,x);
 						if(cursorOffset<the_command_iterator && x!=getmaxx(w)-1){
 							wmove(w,y,x+1);
