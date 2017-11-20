@@ -144,6 +144,8 @@ int main(void){
 				wmove(w,y,x + (the_command_iterator - cursorOffset));
 				cursorOffset = the_command_iterator;
 				break;
+			case 9:
+				break;
 			case 12:
 			{
 				//CTRL L, clear terminal except for current command
@@ -266,6 +268,14 @@ int main(void){
 							//only want the size of the command to be 2
 							
 							//do cd stuff here..
+							if(chdir(the_array[1])==0){
+								//succesfull changing direcories
+								
+							}else{
+								//not successfull, print error message
+								addstr("\n");
+								addstr("ERROR: not a directory");
+							}
 						}else{
 							addstr("\n");
 							addstr("Usage:: cd <directory>");
@@ -287,7 +297,8 @@ int main(void){
 						attron(COLOR_PAIR(3));
 
 					}else if(strcmp(the_array[0],"exit")==0){
-
+						endwin();
+						exit(0);
 					}
 				}
 
