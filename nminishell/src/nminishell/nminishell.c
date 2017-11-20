@@ -191,14 +191,7 @@ int main(void){
 								new_str_it++;
 							}
 						}
-						// char before_del[the_command_iterator-1];
-						// char after_del[the_command_iterator - cursorOffset-1];
-						// memset(after_del, 0, the_command_iterator - cursorOffset);
-						// memset(before_del, 0, the_command_iterator);
-						// strncpy(before_del,the_command,cursorOffset-1);
-						// strncpy(after_del,the_command - cursorOffset, the_command_iterator - cursorOffset);
-						// strcat(before_del,after_del);
-						// strcat(the_command,before_del);
+						
 						strcpy(the_command,new_str);
 
 					}else{
@@ -211,14 +204,12 @@ int main(void){
 
 					the_command_iterator-=1;
 					cursorOffset-=1;
-					
-					//addstr(the_command);
 					getyx(w,y,x);
 					
 					if(x==0){
-						mvwdelch(w,y-1,getmaxx(w)-1);
+						mvdelch(y-1,getmaxx(w)-1);
 					}else{
-						mvwdelch(w,y,x-1);
+						mvdelch(y,x-1);
 					}
 				}
 				break;
