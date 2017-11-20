@@ -134,7 +134,9 @@ int main(void){
 			// 	endwin();
 			// 	exit(0);
 			case 1: // CTRL A
-				addch(cursorOffset);
+				getyx(w,y,x);
+				wmove(w,y,x - cursorOffset);
+				cursorOffset = 0;
 				break;
 			case 12:
 			{
