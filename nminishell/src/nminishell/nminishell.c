@@ -236,18 +236,26 @@ int main(void){
 				}
 				break;
 			case '\n':
+			{
 				const char s[2] = " ";
-				// char *token;
-				// char** the_array;
-				// /* get the first token */
-				// token = strtok(str, s);
+				char *token;
+				char** the_array = (char**) calloc(1,sizeof(char*));
+				int x=1;
+				/* get the first token */
+				token = strtok(the_command, s);
+				while( token != NULL ) {
+					the_array[x-1] = token;
+					addstr("< ");
+					addstr(the_array[x-1]);
+					addstr(" > ,");
+					the_array = realloc(the_array,x * sizeof(char*));
+					x++;
+					//printf( "%s\n", token );
+					token = strtok(NULL, s);
 
-				//  walk through other tokens 
-				// while( token != NULL ) {
-				// printf( "%s\n", token );
+				}
 
-				// token = strtok(NULL, s);
-				// }
+
 
 				memset(the_command, 0, sizeof the_command);
 				the_command_iterator=0;
@@ -257,7 +265,7 @@ int main(void){
 				printMessage(); // we should do this last
 				attron(COLOR_PAIR(3));
 				break;
-
+			}
 			default:
 				the_command[the_command_iterator] = c;
 				the_command_iterator++;
