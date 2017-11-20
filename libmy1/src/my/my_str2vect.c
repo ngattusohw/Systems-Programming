@@ -1,5 +1,5 @@
 #include "../../include/my.h"
-#include <stdio.h>
+
 
 int get_spaces(char* the_string);
 

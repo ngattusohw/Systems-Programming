@@ -236,6 +236,19 @@ int main(void){
 				}
 				break;
 			case '\n':
+				const char s[2] = " ";
+				// char *token;
+				// char** the_array;
+				// /* get the first token */
+				// token = strtok(str, s);
+
+				//  walk through other tokens 
+				// while( token != NULL ) {
+				// printf( "%s\n", token );
+
+				// token = strtok(NULL, s);
+				// }
+
 				memset(the_command, 0, sizeof the_command);
 				the_command_iterator=0;
 				cursorOffset=0;

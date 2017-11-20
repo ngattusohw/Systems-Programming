@@ -64,10 +64,10 @@ int main(){
 
 	//printf("%s\n", my_strconcat("First String", "Second String"));
 
-	char** the_array = my_str2vect("This is my string");
+	char** the_array = my_str2vect("   \t  Hello \t      World    \t     !   \t");
 
 	printf("TEST PRINT %s\n", the_array[0]);
-	for(int x=0;x<10;x++){
+	for(int x=0;the_array[x]!=NULL;x++){
 		printf("<%s> , ", the_array[x]);
 	}
 	printf("\n");
