@@ -28,7 +28,7 @@ int main(void){
 	int cursorOffset=0;
 	w=initscr();
 	noecho();
-	//raw(); //line buffering disabled
+	raw(); //line buffering disabled
 	start_color(); // must be called to use colors
 	scrollok(w,true);
 	init_pair(1,COLOR_GREEN,COLOR_BLUE);
@@ -314,10 +314,23 @@ int main(void){
 				break;
 			}
 			default:
-				the_command[the_command_iterator] = c;
-				the_command_iterator++;
-				cursorOffset++;
-				addch(c);
+				if(c >= 0 && c<= 31){
+					//this means its signal
+					switch(c){
+						case 3:
+							addstr("\nCannot exit. To exit please use the command exit");
+							break;
+						default:
+							addstr("\n Not a recognized signal");
+					}
+				}else{
+					//not a signal
+					the_command[the_command_iterator] = c;
+					the_command_iterator++;
+					cursorOffset++;
+					addch(c);
+				}
+				break;
 		}
 	}
 
