@@ -138,6 +138,11 @@ int main(void){
 				wmove(w,y,x - cursorOffset);
 				cursorOffset = 0;
 				break;
+			case 5:
+				getyx(w,y,x);
+				wmove(w,y,x + (the_command_iterator - cursorOffset));
+				cursorOffset = the_command_iterator;
+				break;
 			case 12:
 			{
 				//CTRL L, clear terminal except for current command
