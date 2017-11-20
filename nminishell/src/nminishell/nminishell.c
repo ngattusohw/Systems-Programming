@@ -133,9 +133,10 @@ int main(void){
 			// 	endwin();
 			// 	exit(0);
 			case 1: // CTRL A
-				addch('B');
+				addch(cursorOffset);
 				break;
 			case 20: //CTRL T Test
+				addstr(the_command);
 				break;
 			case 27: //means its an arrow key
 				getch(); //flush the next '['
@@ -173,14 +174,44 @@ int main(void){
 				}
 				break;
 			case 127: //handle backspace/deleting characters
-				if(the_command_iterator!=0){
+				if(the_command_iterator!=0 && cursorOffset!=0){
 					//this works but it actually sucks lol
-					char new_str[the_command_iterator-1];
-					memset(new_str, 0, the_command_iterator);
-					strncpy(new_str,the_command,the_command_iterator-1);
-					strncpy(the_command,new_str,the_command_iterator);
+					
+					//might need to do some logic here that figures out if at the end of the string
+					//based off of the cursorOffset
+					if(cursorOffset!=the_command_iterator){
+						//this means we are not at the end
+						char new_str[the_command_iterator];
+						memset(new_str, 0, the_command_iterator);
+						int new_str_it=0;
+						int where_to_delete = cursorOffset==0 ? 0 : cursorOffset-1;
+						for(int command_counter=0;command_counter<the_command_iterator;command_counter++){
+							if(command_counter!=where_to_delete){
+								new_str[new_str_it] = the_command[command_counter];
+								new_str_it++;
+							}
+						}
+						// char before_del[the_command_iterator-1];
+						// char after_del[the_command_iterator - cursorOffset-1];
+						// memset(after_del, 0, the_command_iterator - cursorOffset);
+						// memset(before_del, 0, the_command_iterator);
+						// strncpy(before_del,the_command,cursorOffset-1);
+						// strncpy(after_del,the_command - cursorOffset, the_command_iterator - cursorOffset);
+						// strcat(before_del,after_del);
+						// strcat(the_command,before_del);
+						strcpy(the_command,new_str);
+
+					}else{
+						//this means we are at the end of command string
+						char new_str[the_command_iterator-1];
+						memset(new_str, 0, the_command_iterator);
+						strncpy(new_str,the_command,the_command_iterator-1);
+						strncpy(the_command,new_str,the_command_iterator);
+					}
+
 					the_command_iterator-=1;
-					cursorOffset--;
+					cursorOffset-=1;
+					
 					//addstr(the_command);
 					getyx(w,y,x);
 					
@@ -189,13 +220,12 @@ int main(void){
 					}else{
 						mvwdelch(w,y,x-1);
 					}
-					
-
 				}
 				break;
 			case '\n':
 				memset(the_command, 0, sizeof the_command);
 				the_command_iterator=0;
+				cursorOffset=0;
 				addstr("\n");
 				attroff(COLOR_PAIR(3));
 				printMessage(); // we should do this last
