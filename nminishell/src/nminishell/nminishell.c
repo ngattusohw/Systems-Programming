@@ -34,6 +34,7 @@ int main(void){
 	init_pair(1,COLOR_GREEN,COLOR_BLUE);
 	init_pair(2,COLOR_BLACK,COLOR_WHITE);
 	init_pair(3,COLOR_WHITE,COLOR_BLACK);
+	init_pair(4,COLOR_RED,COLOR_GREEN);
 
 	attron(COLOR_PAIR(2));
 	addstr("Welcome to my terminal!\n");
@@ -240,19 +241,54 @@ int main(void){
 				const char s[2] = " ";
 				char *token;
 				char** the_array = (char**) calloc(1,sizeof(char*));
-				int x=1;
+				int the_array_size = 1;
+				int the_array_iterator = 0;
 				/* get the first token */
 				token = strtok(the_command, s);
 				while( token != NULL ) {
-					the_array[x-1] = token;
-					addstr("< ");
-					addstr(the_array[x-1]);
-					addstr(" > ,");
-					the_array = realloc(the_array,x * sizeof(char*));
-					x++;
-					//printf( "%s\n", token );
+					the_array = realloc(the_array,the_array_size * sizeof(char*));
+					the_array[the_array_iterator] = token;
+					// addstr("< ");
+					// addstr(the_array[x-1]);
+					// addstr(" > ,");
+					the_array_iterator++;
+					the_array_size++;
 					token = strtok(NULL, s);
 
+				}
+
+				//now that we have the split up commands, check to see which command
+				//it is and do the respective work
+				if(the_array[0]){
+					if(strcmp(the_array[0],"cd")==0){
+						if(the_array[1]!=NULL && the_array_size==3){
+							//the_array_size==3 because I do tas++ at end of loop,
+							//only want the size of the command to be 2
+							
+							//do cd stuff here..
+						}else{
+							addstr("\n");
+							addstr("Usage:: cd <directory>");
+						}
+					}else if(strcmp(the_array[0],"help")==0){
+						attroff(COLOR_PAIR(3));
+						attron(COLOR_PAIR(4));
+						addstr("\n");
+						addstr("Welcome to my terminal! There is tons of stuff that you can do here.\n");
+						addstr("On top of the basics of terminal, here are some of the commands.. \n");
+						addstr("cd .. (Usage) cd <directory> .. changes directory\n");
+						addstr("help .. But you already knew that\n");
+						addstr("exit .. exits the terminal\n\n");
+						addstr("Special flags\n");
+						addstr("CTRL + A .. moves the cursor to the beg of the line\n");
+						addstr("CTRL + E .. moves the cursor to the end of the line\n");
+						addstr("CTRL + L .. clears the terminal except for current line\n");
+						attroff(COLOR_PAIR(4));
+						attron(COLOR_PAIR(3));
+
+					}else if(strcmp(the_array[0],"exit")==0){
+
+					}
 				}
 
 
