@@ -4,6 +4,7 @@
 #include <ncurses.h>
 #include <string.h>
 #include <unistd.h>
+#include <assert.h>
 #include "list.h"
 
 
@@ -234,27 +235,57 @@ int main(void){
 						endwin();
 						exit(0);
 					}else{
+						addstr("\n");
 						//This means we do not know what the command is,
 						//so send it to the actual terminal for exec
 						//
 						//unsigned int pid;
 
-						if(fork() == 0){
-							//my_str("execpv: \n");
-							//my_str(exe[1]);//execpv
-							//my_int(execvp(exe[0], exe));
+						// if(fork() == 0){
+						// 	//my_str("execpv: \n");
+						// 	//my_str(exe[1]);//execpv
+						// 	//my_int(execvp(exe[0], exe));
 							
-							if(execvp(the_array[0], the_array)<0){
-								//my_str("invalid command\n");
-							}
-							exit(0);
+						// 	if(execvp(the_array[0], the_array)<0){
+						// 		//my_str("invalid command\n");
+						// 	}
+						// 	exit(0);
 						
-						}else{
-							wait(NULL);
+						// }else{
+						// 	wait(NULL);
 							
-							//my_str("Finished Executing\n");
+						// 	//my_str("Finished Executing\n");
+						// }
+						//trying something new
+						
+						int PATH_MAX = 200;
+						FILE *fp;
+						int status;
+						char path[PATH_MAX];
+
+
+						fp = popen(the_command, "r");
+						if (fp == NULL)
+						    /* Handle error */;
+
+
+						while (fgets(path, PATH_MAX, fp) != NULL){
+						    //printf("%s", path);
+						    addstr(path);
 						}
 
+
+						status = pclose(fp);
+						if (status == -1) {
+						    /* Error reported by pclose() */
+						    addstr("Error!\n");
+						} else {
+						    /* Use macros described under wait() to inspect `status' in order
+						       to determine success/failure of command executed by popen() */
+						    wait(NULL);
+						}
+
+						
 
 
 					}
