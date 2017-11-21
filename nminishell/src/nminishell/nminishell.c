@@ -4,6 +4,7 @@
 #include <ncurses.h>
 #include <string.h>
 #include <unistd.h>
+#include "list.h"
 
 
 void printMessage(){
@@ -26,6 +27,8 @@ int main(void){
 	char c;
 	int y,x;
 	int cursorOffset=0;
+	int HISTORY_SIZE_LIMIT = 10;
+	int HISTORY_INDEX = 0;
 	w=initscr();
 	noecho();
 	raw(); //line buffering disabled
@@ -35,6 +38,8 @@ int main(void){
 	init_pair(2,COLOR_BLACK,COLOR_WHITE);
 	init_pair(3,COLOR_WHITE,COLOR_BLACK);
 	init_pair(4,COLOR_RED,COLOR_GREEN);
+
+	struct s_node** the_command_history = (struct s_node**) malloc(sizeof(struct s_node) * HISTORY_SIZE_LIMIT);
 
 	attron(COLOR_PAIR(2));
 	addstr("Welcome to my terminal!\n");
@@ -50,90 +55,6 @@ int main(void){
 		c = getch();
 		//printf("%s\n", "Sample text");
 		switch(c){
-			// case 2:
-			// 	// setupterm(NULL, fileno(stdout), (int *)0);
-			// 	// if(toggles[2]==0){
-			// 	// 	//bold = tigetstr("smso");
-			// 	// 	//putp(bold);
-			// 	// 	attron(A_BOLD);
-			// 	// 	toggles[2]=1;
-			// 	// 	//printf("%s\n", "HI");
-			// 	}else{
-			// 		// // offbold = tigetstr("rmso");
-			// 		// // putp(offbold);
-			// 		// attroff(A_BOLD);
-			// 		// toggles[2]=0;
-			// 	}
-			// 	break;
-			// case 9:
-			// 	if(toggles[9]==0){
-			// 		//attron(A_ITALIC);
-			// 		toggles[9]=1;
-			// 	}else{
-			// 		//attroff(A_ITALIC);
-			// 		toggles[9]=0;
-			// 	}
-			// 	break;
-			// case 21:
-			// 	//setupterm(NULL, fileno(stdout), (int *)0);
-			// 	if(toggles[21]==0){
-			// 		//tcsetattr(fileno(stdin), A_UNDERLINE, &new_settings);
-			// 		attron(A_UNDERLINE);
-			// 		//printf("I am highlighted!\n");
-			// 		toggles[21]=1;
-			// 	}else{
-			// 		attroff(A_UNDERLINE);
-			// 		toggles[21]=0;
-			// 	}
-			// 	break;
-			// case 12:
-			// 	if(toggles[12]==0){
-			// 		attron(A_BLINK);
-			// 		toggles[12]=1;
-			// 	}else{
-			// 		attroff(A_BLINK);
-			// 		toggles[12]=0;
-			// 	}
-			// 	break;
-			// case 18:
-			// 	attroff(A_BLINK);
-			// 	attroff(A_UNDERLINE);
-			// 	//attroff(A_ITALIC);
-			// 	attroff(A_BOLD);
-			// 	for(int x=0;x<26;x++){
-			// 		toggles[x]=0;
-			// 	}
-			// 	break;
-			// case 7:
-			// 	if(toggles[7]==0){
-			// 		attron(COLOR_PAIR(1));
-			// 		toggles[7]=1;
-			// 	}else{
-			// 		attroff(COLOR_PAIR(1));
-			// 		toggles[7]=0;
-			// 	}
-			// 	break;
-			// case 11:
-			// 	if(toggles[11]==0){
-			// 		attron(COLOR_PAIR(2));
-			// 		toggles[11]=1;
-			// 	}else{
-			// 		attroff(COLOR_PAIR(2));
-			// 		toggles[11]=0;
-			// 	}
-			// 	break;
-			// case 23:
-			// 	if(toggles[23]==0){
-			// 		attron(COLOR_PAIR(3));
-			// 		toggles[23]=1;
-			// 	}else{
-			// 		attroff(COLOR_PAIR(3));
-			// 		toggles[23]=0;
-			// 	}
-			// 	break;
-			// case 17:
-			// 	endwin();
-			// 	exit(0);
 			case 1: // CTRL A
 				getyx(w,y,x);
 				wmove(w,y,x - cursorOffset);
@@ -314,7 +235,16 @@ int main(void){
 						exit(0);
 					}
 				}
-
+				my_char('H');
+				my_int('1');
+				//store the command in the linked list so we dont lose it
+				struct s_node* Node = new_node(the_command,NULL,node_at(*the_command_history,HISTORY_INDEX));
+				HISTORY_INDEX++;
+				if(HISTORY_SIZE_LIMIT - 5 <= HISTORY_INDEX){
+					HISTORY_SIZE_LIMIT*=2;
+					the_command_history = realloc(the_command_history,sizeof(struct s_node) * HISTORY_SIZE_LIMIT);
+				}
+				append(Node,the_command_history);
 
 
 				memset(the_command, 0, sizeof the_command);
