@@ -27,8 +27,8 @@ int main(void){
 	char c;
 	int y,x;
 	int cursorOffset=0;
-	int HISTORY_SIZE_LIMIT = 10;
-	int HISTORY_INDEX = 0;
+	// int HISTORY_SIZE_LIMIT = 10;
+	// int HISTORY_INDEX = 0;
 	w=initscr();
 	noecho();
 	raw(); //line buffering disabled
@@ -39,7 +39,7 @@ int main(void){
 	init_pair(3,COLOR_WHITE,COLOR_BLACK);
 	init_pair(4,COLOR_RED,COLOR_GREEN);
 
-	struct s_node** the_command_history = (struct s_node**) malloc(sizeof(struct s_node) * HISTORY_SIZE_LIMIT);
+	//struct s_node** the_command_history = (struct s_node**) malloc(sizeof(struct s_node) * HISTORY_SIZE_LIMIT);
 
 	attron(COLOR_PAIR(2));
 	addstr("Welcome to my terminal!\n");
@@ -233,18 +233,42 @@ int main(void){
 					}else if(strcmp(the_array[0],"exit")==0){
 						endwin();
 						exit(0);
+					}else{
+						//This means we do not know what the command is,
+						//so send it to the actual terminal for exec
+						//
+						//unsigned int pid;
+
+						if(fork() == 0){
+							//my_str("execpv: \n");
+							//my_str(exe[1]);//execpv
+							//my_int(execvp(exe[0], exe));
+							
+							if(execvp(the_array[0], the_array)<0){
+								//my_str("invalid command\n");
+							}
+							exit(0);
+						
+						}else{
+							wait(NULL);
+							
+							//my_str("Finished Executing\n");
+						}
+
+
+
 					}
 				}
-				my_char('H');
-				my_int('1');
-				//store the command in the linked list so we dont lose it
-				struct s_node* Node = new_node(the_command,NULL,node_at(*the_command_history,HISTORY_INDEX));
-				HISTORY_INDEX++;
-				if(HISTORY_SIZE_LIMIT - 5 <= HISTORY_INDEX){
-					HISTORY_SIZE_LIMIT*=2;
-					the_command_history = realloc(the_command_history,sizeof(struct s_node) * HISTORY_SIZE_LIMIT);
-				}
-				append(Node,the_command_history);
+				// my_char('H');
+				// my_int('1');
+				// //store the command in the linked list so we dont lose it
+				// struct s_node* Node = new_node(the_command,NULL,node_at(*the_command_history,HISTORY_INDEX));
+				// HISTORY_INDEX++;
+				// if(HISTORY_SIZE_LIMIT - 5 <= HISTORY_INDEX){
+				// 	HISTORY_SIZE_LIMIT*=2;
+				// 	the_command_history = realloc(the_command_history,sizeof(struct s_node) * HISTORY_SIZE_LIMIT);
+				// }
+				// append(Node,the_command_history);
 
 
 				memset(the_command, 0, sizeof the_command);
