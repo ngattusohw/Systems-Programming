@@ -1,4 +1,5 @@
 // #include <stdio.h>
+#define _XOPEN_SOURCE 500
 #include <stdlib.h>
 #include <term.h>
 #include <ncurses.h>
