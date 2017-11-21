@@ -139,12 +139,10 @@ int main(void){
 				wmove(w,y,x - cursorOffset);
 				cursorOffset = 0;
 				break;
-			case 5:
+			case 5: //CTRL E
 				getyx(w,y,x);
 				wmove(w,y,x + (the_command_iterator - cursorOffset));
 				cursorOffset = the_command_iterator;
-				break;
-			case 9:
 				break;
 			case 12:
 			{
@@ -162,7 +160,7 @@ int main(void){
 
 				break;
 			}
-			case 20: //CTRL T Test
+			case 20: //CTRL T Test REMOVE
 				addstr(the_command);
 				break;
 			case 27: //means its an arrow key
@@ -219,23 +217,38 @@ int main(void){
 						
 						strcpy(the_command,new_str);
 
+						getyx(w,y,x);
+						wmove(w,y,0);
+						wclrtobot(w);
+						
+
+						attroff(COLOR_PAIR(3));
+						printMessage(); // we should do this last
+						attron(COLOR_PAIR(3));
+						wmove(w,y,x - cursorOffset);
+						addstr(the_command);
+						wmove(w,y,x-1);
+
+
 					}else{
 						//this means we are at the end of command string
 						char new_str[the_command_iterator-1];
 						memset(new_str, 0, the_command_iterator);
 						strncpy(new_str,the_command,the_command_iterator-1);
 						strncpy(the_command,new_str,the_command_iterator);
+
+						getyx(w,y,x);
+					
+						if(x==0){
+							mvdelch(y-1,getmaxx(w)-1);
+						}else{
+							mvdelch(y,x-1);
+						}
 					}
 
 					the_command_iterator-=1;
 					cursorOffset-=1;
-					getyx(w,y,x);
 					
-					if(x==0){
-						mvdelch(y-1,getmaxx(w)-1);
-					}else{
-						mvdelch(y,x-1);
-					}
 				}
 				break;
 			case '\n':
@@ -322,6 +335,7 @@ int main(void){
 							break;
 						default:
 							addstr("\n Not a recognized signal");
+							break;
 					}
 				}else{
 					//not a signal
