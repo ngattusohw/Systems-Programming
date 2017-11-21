@@ -6,6 +6,7 @@
 #include <string.h>
 #include <unistd.h>
 #include <assert.h>
+#include <sys/wait.h>
 #include "list.h"
 
 
