@@ -237,13 +237,22 @@ int main(void){
 						endwin();
 						exit(0);
 					}else if(the_array[0][0] == '$'){
-						addstr("Testing");
-						char out_command[the_command_iterator-3];
+						//addstr("Testing");
+						char out_command[250];
 						int temp_iterator = 0;
-						for(int out_iterator=2;out_iterator<=the_command_iterator-1;out_iterator++){
-							out_command[temp_iterator] = the_command[out_iterator];
-							temp_iterator++;
+						for(int temp=0;temp<the_command_iterator;temp++){
+							// if(the_command[temp]==')'){
+							// 	index_of_endpara = temp;
+							// 	addch(index_of_endpara);
+							// 	break;
+							// }
+							if(the_command[temp]!= '(' && the_command[temp]!= '$' && the_command[temp]!= ')' && the_command[temp]!= '\0'){
+								out_command[temp_iterator] = the_command[temp];
+								temp_iterator++;
+							}
 						}
+						// memcpy(out_command, &the_command[2], index_of_endpara);
+						// out_command[index_of_endpara-2] = '\0';
 						addstr("\n");
 						addstr(out_command);
 						// if(the_array[0][1] == '('){
