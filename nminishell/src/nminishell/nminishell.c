@@ -236,6 +236,28 @@ int main(void){
 					}else if(strcmp(the_array[0],"exit")==0){
 						endwin();
 						exit(0);
+					}else if(the_array[0][0] == '$'){
+						addstr("Testing");
+						char out_command[the_command_iterator-3];
+						int temp_iterator = 0;
+						for(int out_iterator=2;out_iterator<=the_command_iterator-1;out_iterator++){
+							out_command[temp_iterator] = the_command[out_iterator];
+							temp_iterator++;
+						}
+						addstr("\n");
+						addstr(out_command);
+						// if(the_array[0][1] == '('){
+						// 	int temp_command_iterator = 2;
+						// 	char out_command[the_command_iterator];
+						// 	addstr("Testing");
+						// 	while(the_command[temp_command_iterator]!=')' && temp_command_iterator <= the_command_iterator){
+						// 		addch('A');
+						// 		out_command[temp_command_iterator-2] = the_command[temp_command_iterator];
+						// 	}
+						// 	addstr(out_command);
+						// }else{
+						// 	addstr("You suck bitch\n");
+						// }
 					}else{
 						addstr("\n");
 						//This means we do not know what the command is,
