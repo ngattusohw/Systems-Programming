@@ -1,4 +1,5 @@
 // #include <stdio.h>
+#define _POSIX_C_SOURCE 200809L
 #define _XOPEN_SOURCE 500
 #include <stdlib.h>
 #include <term.h>
@@ -183,7 +184,8 @@ int main(void){
 				int the_array_size = 1;
 				int the_array_iterator = 0;
 				/* get the first token */
-				token = strtok(the_command, s);
+				char* the_command_copy = strdup(the_command);
+				token = strtok(the_command_copy, s);
 				while( token != NULL ) {
 					the_array = realloc(the_array,the_array_size * sizeof(char*));
 					the_array[the_array_iterator] = token;
@@ -240,12 +242,14 @@ int main(void){
 						//addstr("Testing");
 						char out_command[250];
 						int temp_iterator = 0;
+						addstr("\n");
 						for(int temp=0;temp<the_command_iterator;temp++){
 							// if(the_command[temp]==')'){
 							// 	index_of_endpara = temp;
 							// 	addch(index_of_endpara);
 							// 	break;
 							// }
+							addch(the_command[temp]);
 							if(the_command[temp]!= '(' && the_command[temp]!= '$' && the_command[temp]!= ')' && the_command[temp]!= '\0'){
 								out_command[temp_iterator] = the_command[temp];
 								temp_iterator++;
