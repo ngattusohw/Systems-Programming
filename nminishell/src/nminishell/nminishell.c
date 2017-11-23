@@ -2,6 +2,7 @@
 #define _POSIX_C_SOURCE 200809L
 #define _XOPEN_SOURCE 500
 #include <stdlib.h>
+#include <stdio.h>
 #include <term.h>
 #include <ncurses.h>
 #include <string.h>
@@ -26,13 +27,16 @@ void printMessage(){
 
 
 int main(void){
-
+	FILE *the_file;
+	the_file =fopen(".nsmhist", "w");
+	fclose(the_file);
 	WINDOW *w;
 	char c;
 	int y,x;
 	int cursorOffset=0;
 	// int HISTORY_SIZE_LIMIT = 10;
-	// int HISTORY_INDEX = 0;
+	int HISTORY_INDEX = 0;
+	int HISTORY_SIZE = 0;
 	w=initscr();
 	noecho();
 	raw(); //line buffering disabled
@@ -42,6 +46,7 @@ int main(void){
 	init_pair(2,COLOR_BLACK,COLOR_WHITE);
 	init_pair(3,COLOR_WHITE,COLOR_BLACK);
 	init_pair(4,COLOR_RED,COLOR_GREEN);
+	Node the_head;
 
 	//struct s_node** the_command_history = (struct s_node**) malloc(sizeof(struct s_node) * HISTORY_SIZE_LIMIT);
 
@@ -86,9 +91,6 @@ int main(void){
 
 				break;
 			}
-			case 20: //CTRL T Test REMOVE
-				addstr(the_command);
-				break;
 			case 21: //CTRL U, remove line
 				getyx(w,y,x);
 				wmove(w,y,0);
@@ -106,12 +108,47 @@ int main(void){
 
 
 				break;
-			case 23: //CTRL W, remove word
+			case 23:
+			{ //CTRL W, remove word
 				//simply get the current cursor position, translate that into the index of the
 				//command, and then go backwards to the index of the first '\n'. Then go forwards
 				//From index of '\n' to the index of the cursor. Grab that word, remove it from the command,
 				//clear the line, redraw it the_command
+				getyx(w,y,x);
+				int space_index = 0;
+				for(int find_space = cursorOffset;find_space>=0;find_space--){
+					if(the_command[find_space]=='\n'){
+						space_index = find_space;
+					}else{
+						break;
+					}
+				}
+
+				char the_cut_command[the_command_iterator  - (cursorOffset + space_index) + 1]; // note 6, not 5, there's one there for the null terminator
+				strncpy(the_cut_command, the_command, space_index);
+				int hold_iterator = space_index+1;
+				for(int place_the_rest = cursorOffset;place_the_rest<the_command_iterator;place_the_rest++){
+					the_cut_command[hold_iterator] = the_command[place_the_rest];
+					hold_iterator++;
+				}
+
+				char subbuff[cursorOffset - space_index];
+				memcpy( subbuff, &the_command[space_index], cursorOffset - space_index );
+				the_clipboard = strdup(subbuff);
+
+				//the_clipboard = strdup(the_cut_command);
+				wmove(w,y,0);
+				wclrtobot(w);
+				strcpy(the_command,the_cut_command);
+				attroff(COLOR_PAIR(3));
+				printMessage(); // we should do this last
+				attron(COLOR_PAIR(3));
+				wmove(w,y,x);
+				//wmove(w,y,x);
+				//
+				
 				break;
+			}
 			case 25: //CTRL Y, paste!
 				addstr(the_clipboard);
 				break;
@@ -119,10 +156,12 @@ int main(void){
 				getch(); //flush the next '['
 				switch(getch()){
 					case 65: //Up arrow
-						addch('A');
+						//addch('A');
+						addstr(elem_at(the_head,--HISTORY_INDEX));
 						break;
 					case 66: //Down arrow
-						addch('B');
+						//addch('B');
+						addstr(elem_at(the_head,++HISTORY_INDEX));
 						break;
 					case 67: //Right
 						getyx(w,y,x);
@@ -145,6 +184,7 @@ int main(void){
 						}
 						break;
 					default: // I have no clue lol
+						addstr("\nThe arrowkey ascii values are wrong..\n");
 						break;
 				}
 				break;
@@ -172,7 +212,6 @@ int main(void){
 						getyx(w,y,x);
 						wmove(w,y,0);
 						wclrtobot(w);
-						
 
 						attroff(COLOR_PAIR(3));
 						printMessage(); // we should do this last
@@ -181,14 +220,12 @@ int main(void){
 						addstr(the_command);
 						wmove(w,y,x-1);
 
-
 					}else{
 						//this means we are at the end of command string
 						char new_str[the_command_iterator-1];
 						memset(new_str, 0, the_command_iterator);
 						strncpy(new_str,the_command,the_command_iterator-1);
 						strncpy(the_command,new_str,the_command_iterator);
-
 						getyx(w,y,x);
 					
 						if(x==0){
@@ -197,7 +234,6 @@ int main(void){
 							mvdelch(y,x-1);
 						}
 					}
-
 					the_command_iterator-=1;
 					cursorOffset-=1;
 					
@@ -222,7 +258,6 @@ int main(void){
 					the_array_iterator++;
 					the_array_size++;
 					token = strtok(NULL, s);
-
 				}
 
 				//now that we have the split up commands, check to see which command
@@ -259,6 +294,9 @@ int main(void){
 						addstr("CTRL + A .. moves the cursor to the beg of the line\n");
 						addstr("CTRL + E .. moves the cursor to the end of the line\n");
 						addstr("CTRL + L .. clears the terminal except for current line\n");
+						addstr("CTRL + U .. cuts the whole line");
+						addstr("CTRL + W .. cuts the word");
+						addstr("CTRL + Y .. pastes the clipboard!");
 						attroff(COLOR_PAIR(4));
 						attron(COLOR_PAIR(3));
 
@@ -269,11 +307,6 @@ int main(void){
 						char out_command[250];
 						int temp_iterator = 0;
 						for(int temp=0;temp<the_command_iterator;temp++){
-							// if(the_command[temp]==')'){
-							// 	index_of_endpara = temp;
-							// 	addch(index_of_endpara);
-							// 	break;
-							// }
 							if(the_command[temp]!= '(' && the_command[temp]!= '$' && the_command[temp]!= ')' && the_command[temp]!= '\0'){
 								out_command[temp_iterator] = the_command[temp];
 								temp_iterator++;
@@ -304,8 +337,6 @@ int main(void){
 						}
 
 						execvp(the_out_array[0], the_out_array);
-
-						
 					}else{
 						addstr("\n");
 						//This means we do not know what the command is,
@@ -357,9 +388,6 @@ int main(void){
 						    wait(NULL);
 						}
 
-						
-
-
 					}
 				}
 				// my_char('H');
@@ -372,7 +400,23 @@ int main(void){
 				// 	the_command_history = realloc(the_command_history,sizeof(struct s_node) * HISTORY_SIZE_LIMIT);
 				// }
 				// append(Node,the_command_history);
+				// 
+				// Add to linkedlist
+				
+				if(HISTORY_SIZE==0){
+					the_head = new_node(the_command,NULL,NULL);
+				}else{
+					add_elem(the_command,&the_head);
+					//addstr(elem_at(the_head,HISTORY_INDEX));
+				}
+				HISTORY_SIZE++;
+				HISTORY_INDEX++;
 
+				//Save history to file
+				//
+				the_file =fopen(".nsmhist", "a+");
+				fprintf(the_file,"%s\n",the_command);
+				fclose(the_file);
 
 				memset(the_command, 0, sizeof the_command);
 				the_command_iterator=0;
@@ -404,16 +448,6 @@ int main(void){
 				break;
 		}
 	}
-
-
-	// char *bold, *offbold;
-	// setupterm(NULL, fileno(stdout), (int *)0);
-	// bold = tigetstr("smso");
-	// offbold = tigetstr("rmso");
-	// putp(bold);
-	// printf("This should be highlighted\n");
-	// putp(offbold);
-	// beep();
 	endwin();
 	exit(0);
 }

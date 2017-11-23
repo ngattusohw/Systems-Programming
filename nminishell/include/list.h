@@ -1,5 +1,6 @@
 #ifndef _MYLIST_H_
 #define _MYLIST_H_
+#define NODE_SIZE sizeof(struct s_node)
 
 #include "my.h"
 
@@ -10,6 +11,9 @@
  ~~~~/lib/liblist.a
  ~~~~/test/testlist.c
 */
+
+typedef struct s_node* Node;
+
 
 struct s_node {
  void* elem;
