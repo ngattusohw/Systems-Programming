@@ -51,6 +51,7 @@ int main(void){
 
 	printMessage();
 
+	char* the_clipboard;
 	char the_command[250];
 	int the_command_iterator=0;
 	attron(COLOR_PAIR(3));
@@ -87,6 +88,28 @@ int main(void){
 			}
 			case 20: //CTRL T Test REMOVE
 				addstr(the_command);
+				break;
+			case 21: //CTRL U, remove line
+				getyx(w,y,x);
+				wmove(w,y,0);
+				wclrtobot(w);
+				the_clipboard = strdup(the_command);
+				attroff(COLOR_PAIR(3));
+				printMessage(); // we should do this last
+				attron(COLOR_PAIR(3));
+				wmove(w,y,x - cursorOffset);
+				//wmove(w,y,x);
+
+				memset(the_command, 0, sizeof the_command);
+				the_command_iterator=0;
+				cursorOffset=0;
+
+
+				break;
+			case 23: //CTRL W, remove word
+				break;
+			case 25: //CTRL Y, paste!
+				addstr(the_clipboard);
 				break;
 			case 27: //means its an arrow key
 				getch(); //flush the next '['
@@ -239,38 +262,46 @@ int main(void){
 						endwin();
 						exit(0);
 					}else if(the_array[0][0] == '$'){
-						//addstr("Testing");
 						char out_command[250];
 						int temp_iterator = 0;
-						addstr("\n");
 						for(int temp=0;temp<the_command_iterator;temp++){
 							// if(the_command[temp]==')'){
 							// 	index_of_endpara = temp;
 							// 	addch(index_of_endpara);
 							// 	break;
 							// }
-							addch(the_command[temp]);
 							if(the_command[temp]!= '(' && the_command[temp]!= '$' && the_command[temp]!= ')' && the_command[temp]!= '\0'){
 								out_command[temp_iterator] = the_command[temp];
 								temp_iterator++;
 							}
 						}
+						out_command[temp_iterator] = '\0';
 						// memcpy(out_command, &the_command[2], index_of_endpara);
 						// out_command[index_of_endpara-2] = '\0';
-						addstr("\n");
-						addstr(out_command);
-						// if(the_array[0][1] == '('){
-						// 	int temp_command_iterator = 2;
-						// 	char out_command[the_command_iterator];
-						// 	addstr("Testing");
-						// 	while(the_command[temp_command_iterator]!=')' && temp_command_iterator <= the_command_iterator){
-						// 		addch('A');
-						// 		out_command[temp_command_iterator-2] = the_command[temp_command_iterator];
-						// 	}
-						// 	addstr(out_command);
-						// }else{
-						// 	addstr("You suck bitch\n");
-						// }
+
+						const char s[2] = " ";
+						char *out_token;
+						char** the_out_array = (char**) calloc(1,sizeof(char*));
+						int the_out_size = 1;
+						int the_out_iterator = 0;
+						/* get the first token */
+						char* the_out_copy = strdup(out_command);
+						out_token = strtok(the_out_copy, s);
+						while( out_token != NULL ) {
+							the_out_array = realloc(the_out_array,the_out_size * sizeof(char*));
+							the_out_array[the_out_iterator] = out_token;
+							// addstr("< ");
+							// addstr(the_array[x-1]);
+							// addstr(" > ,");
+							the_out_iterator++;
+							the_out_size++;
+							out_token = strtok(NULL, s);
+
+						}
+
+						execvp(the_out_array[0], the_out_array);
+
+						
 					}else{
 						addstr("\n");
 						//This means we do not know what the command is,
