@@ -107,6 +107,10 @@ int main(void){
 
 				break;
 			case 23: //CTRL W, remove word
+				//simply get the current cursor position, translate that into the index of the
+				//command, and then go backwards to the index of the first '\n'. Then go forwards
+				//From index of '\n' to the index of the cursor. Grab that word, remove it from the command,
+				//clear the line, redraw it the_command
 				break;
 			case 25: //CTRL Y, paste!
 				addstr(the_clipboard);
