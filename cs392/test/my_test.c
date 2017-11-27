@@ -15,10 +15,15 @@ int main(){
 	// char* the_string = "F";
 	// my_num_base(9,the_string);
 	
-	my_alpha();
+	//my_alpha();
 
 
+	char** hello = my_str2vect("Hello \t      World    \t     !   \t");
+	for(int x=0;x<sizeof(hello);x++){
+		printf("<%s>,", hello[x]);
+	}
+	printf("\n");
 
 
-	return(0);
+	//return(0);
 }
