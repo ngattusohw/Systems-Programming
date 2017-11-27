@@ -29,7 +29,6 @@ char** my_str2vect(char* the_string){
 
 		char** the_array = (char**) calloc(SIZE,sizeof(char*));
 		int array_counter = 0;
-		int hold_last_index = 0;
 		char* the_current_string = calloc(1,sizeof(char));
 		int the_current_string_size = 0;		
 		int iterator = 0;
@@ -49,12 +48,10 @@ char** my_str2vect(char* the_string){
 				the_current_string_size++;
 
 			}
-
-
 			iterator++;
 		}
 
-
+		the_array[array_counter] = "NULL";
 
 		return the_array;
 

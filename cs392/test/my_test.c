@@ -20,9 +20,13 @@ int main(){
 
 	char** hello = my_str2vect("Hello \t      World    \t     !   \t");
 	for(int x=0;x<sizeof(hello);x++){
-		printf("<%s>,", hello[x]);
+		if(strcmp(hello[x],"NULL")!=0){
+			printf("<%s>,", hello[x]);
+		}else{
+			break;
+		}
 	}
-	printf("\n");
+	//printf("\n");
 
 
 	//return(0);
