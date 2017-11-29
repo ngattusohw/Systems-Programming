@@ -2,7 +2,7 @@ SRCDIR = ./
 IDIR = ../../include/
 LIBDIR = ../../lib/
 LIBS = -llist -lmy
-CFLAGS = -I $(IDIR) -L$(LIBDIR) $(LIBS) -Wall -Werror --pedantic -std=c99 
+CFLAGS = -I $(IDIR) -L $(LIBDIR) $(LIBS) -Wall -Werror --pedantic -std=c99 
 CC = gcc
 SRCS = $(wildcard $(SRCDIR)/*.c)
 OBJS = $(SRCS:.c=.o)
