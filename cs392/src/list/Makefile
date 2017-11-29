@@ -33,7 +33,6 @@ clean:
 	-$(RM) $(TEST_DIR)/$(TEST_OBJ)
 
 fclean: clean
-	-$(RM) $(LIB_PATH)/$(LIB_NAME)
 	-$(RM) $(TEST_DIR)/$(TEST_NAME)
 
 re: fclean all
