@@ -5,7 +5,7 @@ CC = gcc
 SRCS = $(wildcard $(SRCDIR)/*.c)
 OBJS = $(SRCS:.c=.o)
 
-all: $(OBJS)
+all: lib
 
 lib:	$(OBJS)
 	ar -rc libmy.a $(OBJS)
