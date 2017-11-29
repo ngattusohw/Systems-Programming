@@ -46,7 +46,8 @@ int main(void){
 	init_pair(2,COLOR_BLACK,COLOR_WHITE);
 	init_pair(3,COLOR_WHITE,COLOR_BLACK);
 	init_pair(4,COLOR_RED,COLOR_GREEN);
-	Node* the_head;
+	
+	Node the_head;
 	the_head = new_node("$",NULL,NULL);
 
 	//struct s_node** the_command_history = (struct s_node**) malloc(sizeof(struct s_node) * HISTORY_SIZE_LIMIT);
