@@ -405,15 +405,15 @@ int main(void){
 				// 
 				// Add to linkedlist
 				
-				if(HISTORY_SIZE==0){
-					remove_node(&the_head);
-					the_head = new_node(the_command,NULL,NULL);
-				}else{
-					add_elem(the_command,&the_head);
-					//addstr(elem_at(the_head,HISTORY_INDEX));
-				}
-				HISTORY_SIZE++;
-				HISTORY_INDEX++;
+				// if(HISTORY_SIZE==0){
+				// 	remove_node(&the_head);
+				// 	the_head = new_node(the_command,NULL,NULL);
+				// }else{
+				// 	add_elem(the_command,&the_head);
+				// 	//addstr(elem_at(the_head,HISTORY_INDEX));
+				// }
+				// HISTORY_SIZE++;
+				// HISTORY_INDEX++;
 
 				//Save history to file
 				//
