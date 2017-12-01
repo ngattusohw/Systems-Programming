@@ -35,8 +35,8 @@ int main(void){
 	int y,x;
 	int cursorOffset=0;
 	// int HISTORY_SIZE_LIMIT = 10;
-	int HISTORY_INDEX = 0;
-	int HISTORY_SIZE = 0;
+	// int HISTORY_INDEX = 0;
+	// int HISTORY_SIZE = 0;
 	w=initscr();
 	noecho();
 	raw(); //line buffering disabled
