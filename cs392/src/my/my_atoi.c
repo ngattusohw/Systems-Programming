@@ -1,4 +1,4 @@
-#include "../../include/my.h"
+#include "my.h"
 
 /*
 Returns the int represented by the ascii string

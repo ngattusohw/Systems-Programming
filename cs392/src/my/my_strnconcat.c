@@ -1,4 +1,4 @@
-#include "../../include/my.h"
+#include "my.h"
 
 /*
 Same as my_strconcat except:
@@ -7,24 +7,27 @@ Copies all of a and then n chars or length of b
 
 
 char *my_strnconcat(char *a, char *b, int n){
-   if(a && b){
-		int a_length = my_strlen(a);
-		int b_length = n>=0 && (my_strlen(b)>=n) ? n : my_strlen(b);
-		char* new_string = (char*) malloc(sizeof(char) * (a_length + b_length));
-		
-		for(int x=0;x<a_length;x++){
-			new_string[x] = a[x];
-		}
-
-		int z=0;
-		for(int y=a_length;y<(a_length + b_length);y++){
-			new_string[y] = b[z];
-			z++;
-		}
-		return new_string;
-
-	}else{
+	if(!a && !b) {
 		return NULL;
+	}else if(!b) {
+		return my_strdup(a);
+	}else if(n < 0) {
+		n = 0;
 	}
+
+	char *new_string;
+	int len_b = my_strlen(b);
+	int min = len_b < n ? len_b : n;
+
+	if(!a) {
+		new_string = malloc(min + 1);
+		my_strncpy(new_string, b, min);
+	}else{
+		int len_a = my_strlen(a);
+		new_string = malloc(len_a + min + 1);
+		my_strcpy(new_string, a);
+		my_strncpy(new_string + len_a, b, min);
+	}
+	return new_string;
 }
 

@@ -1,4 +1,4 @@
-#include "../../include/my.h"
+#include "my.h"
 
 /*
 Allocates new memory 
@@ -6,8 +6,8 @@ Copies str into that new memory
 returns pointer to new string
  */
 
-char* my_strdup(char *src){
-	if(src){
+char* my_strdup(char *str){
+	if(str){
 		//char* new_string = (char*) malloc(sizeof(char) * my_strlen(str));
 		// char new_string[my_strlen(str)];
 		// int iterator = 0;
@@ -22,19 +22,8 @@ char* my_strdup(char *src){
 		//
 		//
 		
-		char *str;
-	    char *p;
-	    int len = 0;
-
-	    while (src[len])
-	        len++;
-	    str = malloc(len + 1);
-	    p = str;
-	    while (*src)
-	        *p++ = *src++;
-	    *p = '\0';
-	    return str;
-
+		char *dst = (char *) malloc(my_strlen(str) + 1);
+		return my_strcpy(dst, str);
 	}else{
 		return NULL;
 	}

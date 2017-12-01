@@ -47,8 +47,8 @@ int main(void){
 	init_pair(3,COLOR_WHITE,COLOR_BLACK);
 	init_pair(4,COLOR_RED,COLOR_GREEN);
 	
-	Node the_head;
-	the_head = new_node("$",NULL,NULL);
+	// Node the_head;
+	// the_head = new_node("$",NULL,NULL);
 
 	//struct s_node** the_command_history = (struct s_node**) malloc(sizeof(struct s_node) * HISTORY_SIZE_LIMIT);
 
@@ -159,11 +159,11 @@ int main(void){
 				switch(getch()){
 					case 65: //Up arrow
 						//addch('A');
-						addstr(elem_at(the_head,--HISTORY_INDEX));
+						//addstr(elem_at(the_head,--HISTORY_INDEX));
 						break;
 					case 66: //Down arrow
 						//addch('B');
-						addstr(elem_at(the_head,++HISTORY_INDEX));
+						//addstr(elem_at(the_head,++HISTORY_INDEX));
 						break;
 					case 67: //Right
 						getyx(w,y,x);

@@ -1,4 +1,4 @@
-#include "../../include/my.h"
+#include "my.h"
 
 /*
 Copies the characters from src into dst overwriting what's already in there.

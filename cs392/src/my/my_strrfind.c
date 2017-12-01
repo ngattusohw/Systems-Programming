@@ -1,4 +1,4 @@
-#include "../../include/my.h"
+#include "my.h"
 
 /*
 	Returns a pointer to the last char in the string which matches.

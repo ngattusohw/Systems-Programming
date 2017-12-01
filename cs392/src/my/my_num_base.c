@@ -1,4 +1,4 @@
-#include "../../include/my.h"
+#include "my.h"
 
 void my_num_base(int i, char* str){
 	if(!str || !*str){

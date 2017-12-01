@@ -1,4 +1,5 @@
-#include "../../include/my.h"
+#include "my.h"
+#include <stdio.h>
 
 /*
 Takes a vector (array of string ended by a NULL)
@@ -7,15 +8,25 @@ Returns new string
 {"hello","world",NULL} -> "hello world"; 
  */
 char *my_vect2str(char **x){
-	if(x && *x){
-		char* total = my_strdup(*x);
-		for (char* c = *x; c!=NULL; c=*++x) {
-		    total = my_strconcat(total,c);
-		    total = my_strconcat(total," ");
-		}
-		return total;
-	}else{
+	if(!x){
 		return NULL;
+	}else{
+	    int i = 0, size = 0;
+	    while(x[i]) {
+	        size += my_strlen(x[i]);
+	        ++i;
+	    }
+
+	    i = 0;
+	    char *str = malloc(size);
+	    while(x[i+1]) {
+	        my_strcat(str, x[i]);
+	        my_strcat(str, " ");
+	        ++i;
+	    }
+	    my_strcat(str, x[i]);
+	    printf("THIS IS THE STRING %s\n", str);
+	    return str;
 	}
 }
 

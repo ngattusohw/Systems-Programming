@@ -1,4 +1,4 @@
-#include "../../include/my.h"
+#include "my.h"
 
 /*
 Compares strings by ascii value
@@ -13,9 +13,15 @@ Compares strings by ascii value
 THIS IS WRONG
  */
 int my_strcmp(char* a, char* b){
+	if(!a){
+		return !b ? 0 : -1;
+	}else if(!b){
+    	return 1;
+    }
+
 	 while(*a && (*a == *b)){
         a++;
         b++;
     }
-    return *(const unsigned char*)a - *(const unsigned char*)b;	
+    return *a - *b;	
 }

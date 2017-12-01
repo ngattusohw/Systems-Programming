@@ -1,4 +1,4 @@
-#include "../../include/my.h"
+#include "my.h"
 
 int my_strrindex(char* str, char c){
 	int index = -1;

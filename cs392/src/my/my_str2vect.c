@@ -1,62 +1,47 @@
-#include "../../include/my.h"
-
-
-int get_spaces(char* the_string);
-
-int get_spaces(char* the_string){
-	int spaces=1;
-	for(int x=0;x<my_strlen(the_string);x++){
-		if(the_string[x] == ' '){
-			spaces++;
-		}
-	}
-	return spaces;
-}
-
-
-//try using the libmy stuff instead, also fixing the realloc stuff
-
 // Takes a string 
-// Allocates a new vector (array of string ended by a NULL), 
+// Allocates a new vectoror (array of string ended by a NULL), 
 // Splits apart the input string x at each space character 
 // Returns the newly allocated array of strings
 // Any number of ' ','\t', and '\n's can separate words.
 // I.e. "hello \t\t\n class,\nhow are you?" -> {"hello", "class,", "how", "are","you?", NULL}
+#include "my.h"
 
-char** my_str2vect(char* the_string){
-	if(the_string){
-		int SIZE = 1; //need to figure out how big the char arr should be
+#define TRUTH_STATEMENT(chr) ((chr) == ' ' || (chr) == '\t' || (chr) == '\n')
 
-		char** the_array = (char**) calloc(SIZE,sizeof(char*));
-		int array_counter = 0;
-		char* the_current_string = calloc(1,sizeof(char));
-		int the_current_string_size = 0;		
-		int iterator = 0;
-		while(the_string[iterator] && the_string[iterator]!='\0'){
-			if(the_string[iterator] == ' ' || the_string[iterator] == '\t' || the_string[iterator] == '\n'){
-				if(the_current_string_size!=0){
-					array_counter++;
-					the_array = realloc(the_array,array_counter);
-					the_current_string[the_current_string_size] = '\0';
-					the_array[array_counter-1] = my_strdup(the_current_string);
-					the_current_string = calloc(1,sizeof(char));
-					the_current_string_size=0;
-				}
-			}else{
-				the_current_string = realloc(the_current_string, sizeof(char) * (the_current_string_size + 1));
-				the_current_string[the_current_string_size] = the_string[iterator];
-				the_current_string_size++;
+static char **str2vect(char **vector, int vectorlen, char *str) {
+    
+    int curr_len = 0;
+    while(!TRUTH_STATEMENT(*str) && *str != '\0'){
+        ++str;
+        ++curr_len;
+    }
 
-			}
-			iterator++;
-		}
+    if(curr_len > 0){
+        char *word = (char*) malloc(curr_len + 1);
+        my_strncpy(word, str-curr_len, curr_len);
+        
+        vector = realloc(vector, (vectorlen + 1) * sizeof(char *));
+	    vector[vectorlen-1] = word;
+	    vector[vectorlen] = NULL;
 
-		the_array[array_counter] = "NULL";
+        ++vectorlen;
+    }
 
-		return the_array;
+    while(TRUTH_STATEMENT(*str) && *str != '\0'){
+        ++str;
+    }
 
-	}else{
-		return NULL;
-	}
+    if(*str == '\0'){
+        return vector;
+    }
+
+    return str2vect(vector, vectorlen, str);
 }
- 
+
+char **my_str2vect(char *str) {
+    char *s = str;
+    char **vector = { NULL };
+    if(!str) return vector;
+    return str2vect(vector, 1, s);
+}
+

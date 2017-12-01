@@ -1,5 +1,9 @@
-#include "../../include/my.h"
+#include "my.h"
 
 void my_int(int i){
-	my_num_base(i, "0123456789");
+	if(i == 0){
+		my_str("0");
+	}else{
+		my_num_base(i, "0123456789");
+	}
 }

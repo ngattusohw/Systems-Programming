@@ -1,4 +1,4 @@
-#include "../../include/my.h"
+#include "my.h"
 
 /*
 	Same as my_strcmp except:
@@ -8,19 +8,13 @@
 int my_strncmp(char*a, char *b, int n){
 	int i = 0;
     int flag = 0;    
-    while (flag == 0 && i<n)
-    {
-        if (a[i] > b[i])
-        {
+    while (flag == 0 && i<n){
+        if (a[i] > b[i]){
             flag = 1;
-        }
-        else if (a[i] < b[i])
-        {
+        }else if (a[i] < b[i]){
             flag = -1;
         }
-
-        if (a[i] == '\0')
-        {
+        if (a[i] == '\0'){
             break;
         }
 
