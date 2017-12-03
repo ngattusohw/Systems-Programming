@@ -7,7 +7,7 @@
 int mrow, mcol, crow, ccol, lrow, lcol;
 int *selected;
 
-void toggle_underline(){
+void toggle_underline(char **argv, int max_length){
 	if (selected[crow + (ccol / max_length) * mrow] == 1){
 		attron(A_UNDERLINE | A_STANDOUT);
 	}else{
@@ -242,7 +242,7 @@ int main(int argc, char **argv){
 
 			move(crow, ccol);
 			/* underline */
-			toggle_underline();
+			toggle_underline(argv, max_length);
 			/* reset cursor */
 			move(crow, ccol);
 		}
