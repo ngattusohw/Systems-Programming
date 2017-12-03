@@ -89,12 +89,15 @@ int main(int argc, char* argv[])
             {
                 if(ishi[i] == 1)
                 {
-                    my_str(glob[i]);
-                    my_str(" ");
+                    //my_str(glob[i]);
+                    //my_str(" ");
+                    addstr(glob[i]);
+                    addstr(" ");
                 }
                 i++;
             }
-            my_str("\n");
+            //my_str("\n");
+            addstr("\n");
             finish(0);
         }
         if(ch == KEY_LEFT)
