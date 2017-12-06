@@ -8,8 +8,9 @@ void my_num_base(int i, char* str){
     }
 
     if (i == 0) {
-        char c = str[0];
-        my_str(&c);
+    	my_str("No output");
+        // char c = str[0];
+        // my_str(&c);
         return;
     }
     /* deal with negative integers */

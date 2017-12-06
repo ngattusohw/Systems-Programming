@@ -68,7 +68,7 @@ int initialize_window(char** argv, int max_length){
 			crow = 0;
 			ccol += max_length;
 			/* if cant fint new row */
-			if (ccol + my_strlen(argv[i]) >= mcol)
+			if (ccol + my_strlen(argv[i]-2) >= mcol)
 			{
 				/* print resize window */
 				ccol = 0;
