@@ -1,5 +1,6 @@
 #include "my.h"
 #include <signal.h>
+#include <string.h>
 
 #define SIZE 100
 
@@ -15,8 +16,10 @@ int main(){
 			my_str("MINISHELL: ");
 			my_str(cwd);
 			my_str("$: ");
-
 			char buffc[SIZE];
+
+			memset(buffc, 0, SIZE*sizeof(char));
+
 			read(0, buffc, SIZE);
 			//my_str(buffc);
 			char** what_to_do = my_str2vect(buffc);
@@ -60,7 +63,9 @@ int main(){
 			
 			int clear_array = 0;
 			while(what_to_do[clear_array]!=NULL){
-				free(what_to_do[clear_array]);
+				//free(what_to_do[clear_array]);
+				// my_str(what_to_do[clear_array]);
+				// my_str("\n");
 				what_to_do[clear_array] = NULL;
 				clear_array++;
 			}

@@ -43,17 +43,7 @@ void move_down(char **argv, int max_length){
 	move(crow, ccol);
 
 	/* underline/highlight */
-	if (selected[crow + (ccol / max_length) * mrow] == 1){
-		attron(A_UNDERLINE | A_STANDOUT);
-	}else{
-		attron(A_UNDERLINE);
-	}
-
-	addstr(argv[1 + crow + (ccol / max_length) * mrow]);
-	attroff(A_UNDERLINE);
-	if (selected[crow + (ccol / max_length) * mrow] == 1){
-		attroff(A_STANDOUT);
-	}
+	toggle_underline(argv, max_length);
 
 	move(crow, ccol);
 }
