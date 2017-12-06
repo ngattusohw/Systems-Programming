@@ -1,4 +1,4 @@
-#include "../../include/my.h"
+#include "my.h"
 #include <signal.h>
 
 #define SIZE 100
@@ -53,12 +53,24 @@ int main(){
 					}else{
 						wait(NULL);
 					}
+				}else{
+					my_str("Error!\n");
 				}
 			}
+			
+			int clear_array = 0;
+			while(what_to_do[clear_array]!=NULL){
+				free(what_to_do[clear_array]);
+				what_to_do[clear_array] = NULL;
+				clear_array++;
+			}
+			free(what_to_do);
+			what_to_do = NULL;
 		}else{
 		   // perror("getcwd() error");
 		   // exit(1);
 		}
+
 
 	}
 
