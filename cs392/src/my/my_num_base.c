@@ -1,40 +1,38 @@
 #include "my.h"
 
 void my_num_base(int i, char* str){
-	if(!str || !*str){
-		my_str("\nNot a valid string\n");
-		return;
-	}else if(i == 0){
-		my_char(*str);
-		return;
-	}else{
-		unsigned int num = i < 0 ? -i : i;
-		if(i<0){
-			my_char('-');
-		}
+	/* error if NULL or empty string */
+    if(!str || !*str) {
+        my_str("\nERR: Expected valid string of length > 0\n");
+        return;
+    }
 
-		int counter = 0;
-		while(str && str[counter]){
-			counter++;
-		}
+    if (i == 0) {
+        char c = str[0];
+        my_str(&c);
+        return;
+    }
+    /* deal with negative integers */
+    unsigned int num = i < 0 ? -i : i;
+    if(i < 0) my_char('-');
 
-		if(counter == 1){
-			while(num--){
-				my_char(*str);
-			}
-			return;
-		}
+    /* find the desired radix */
+    int radix = 0;
+    while(str && str[radix]) radix++;
 
-		int ex = 1;
-		while(ex <= num/counter){
-			ex *= counter;
-		}
+    if(radix == 1) {
+        while(num--) my_char(*str);
+        return;
+    }
 
-		while(ex){
-			my_char(str[num / ex % counter]);
-			ex /= counter;
-		}
-	}
+    int exp = 1;
+    while(exp <= num/radix) exp *= radix;
+
+    /* print digits in order */
+    while(exp) {
+        my_char(str[num / exp % radix]);
+        exp /= radix;
+    }
 }
 
 
