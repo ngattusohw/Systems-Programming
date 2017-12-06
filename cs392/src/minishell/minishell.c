@@ -2,6 +2,7 @@
 #include <signal.h>
 #include <string.h>
 #include <sys/wait.h>
+#include <sys/types.h>
 
 #define SIZE 100
 
