@@ -65,9 +65,8 @@ int initialize_window(char** argv, int max_length){
 			/* reset row and increment column */
 			crow = 0;
 			ccol += max_length;
-			/* if cant fint new row */
+			//if cant fint new row
 			if (ccol + my_strlen(argv[i]) >= mcol){
-				/* print resize window */
 				ccol = 0;
 				clear();
 				addstr("Resize your window");
@@ -87,10 +86,8 @@ int initialize_window(char** argv, int max_length){
 		refresh();
 		crow++;
 	}
-	/* store last r/c */
 	lrow = crow - 1;
 	lcol = ccol;
-	/* move to top left */
 	move(0, 0);
 	crow = 0;
 	ccol = 0;
@@ -142,19 +139,17 @@ int main(int argc, char **argv){
 		/* escape quits */
 		if (ch == KEY_RESIZE){
 			/* reinit screen */
-			small_flag = initialize_window(argv, max_length);
+			small_flag = init_scr(argv, max_length);
 			/* if displaying files, make first underlined and highlighted if needed*/
 			if (small_flag == 0){
-				if (selected[crow + (ccol / max_length) * mrow] == 1){
+				if (selected[crow + (ccol / max_length) * mrow] == 1)
 					attron(A_UNDERLINE | A_STANDOUT);
-				}else{
+				else
 					attron(A_UNDERLINE);
-				}
 				addstr(argv[1]);
 				attroff(A_UNDERLINE);
-				if (selected[crow + (ccol / max_length) * mrow] == 1){
+				if (selected[crow + (ccol / max_length) * mrow] == 1)
 					attroff(A_STANDOUT);
-				}
 			}
 			move(0, 0);
 		}else if (ch == 27){
@@ -253,7 +248,6 @@ int main(int argc, char **argv){
 				attroff(A_STANDOUT);
 			}
 			move(crow, ccol);
-			////////
 		}
 		refresh();
 	}
