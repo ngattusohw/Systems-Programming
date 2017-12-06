@@ -1,6 +1,7 @@
 #include "my.h"
 #include <signal.h>
 #include <string.h>
+#include <sys/wait.h>
 
 #define SIZE 100
 

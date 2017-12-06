@@ -143,7 +143,7 @@ int main(int argc, char **argv){
 		/* escape quits */
 		if (ch == KEY_RESIZE){
 			/* reinit screen */
-			small_flag = init_scr(argv, max_length);
+			small_flag = initialize_window(argv, max_length);
 			/* if displaying files, make first underlined and highlighted if needed*/
 			if (small_flag == 0){
 				if (selected[crow + (ccol / max_length) * mrow] == 1)
