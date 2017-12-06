@@ -59,14 +59,18 @@ int initialize_window(char** argv, int max_length){
 	ccol = 0;
 	small_flag = 0;
 	/* print files in columns */
-	for (i = 1; argv[i] != NULL; i++){
+	for (i = 1; argv[i] != NULL; i++)
+	{
 		/* if row overflow */
-		if (crow == mrow){
+		if (crow == mrow)
+		{
 			/* reset row and increment column */
 			crow = 0;
 			ccol += max_length;
-			//if cant fint new row
-			if (ccol + my_strlen(argv[i]) >= mcol){
+			/* if cant fint new row */
+			if (ccol + my_strlen(argv[i]) >= mcol)
+			{
+				/* print resize window */
 				ccol = 0;
 				clear();
 				addstr("Resize your window");
@@ -76,18 +80,18 @@ int initialize_window(char** argv, int max_length){
 			}
 		}
 		/* print string */
-		if (selected[crow + (ccol / max_length) * mrow] == 1){
+		if (selected[crow + (ccol / max_length) * mrow] == 1)
 			attron(A_STANDOUT);
-		}
 		mvaddnstr(crow, ccol, argv[i], max_length - 1);
-		if (selected[crow + (ccol / max_length) * mrow] == 1){
+		if (selected[crow + (ccol / max_length) * mrow] == 1)
 			attroff(A_STANDOUT);
-		}
 		refresh();
 		crow++;
 	}
+	/* store last r/c */
 	lrow = crow - 1;
 	lcol = ccol;
+	/* move to top left */
 	move(0, 0);
 	crow = 0;
 	ccol = 0;
