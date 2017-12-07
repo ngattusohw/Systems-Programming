@@ -1,3 +1,4 @@
+//Nick Gattuso
 #include <stddef.h>
 #include <stdlib.h>
 #include "my.h"
@@ -21,7 +22,7 @@ void toggle_underline(char **argv, int max_length){
 }
 
 void move_down(char **argv, int max_length){
-	/* remove underline/ highlight */
+	// remove underline/ highlight
 	if (selected[crow + (ccol / max_length) * mrow] == 1){
 		attron(A_STANDOUT);
 	}
@@ -30,7 +31,6 @@ void move_down(char **argv, int max_length){
 		attroff(A_STANDOUT);
 	}
 
-	/* move */
 	if (crow == lrow && ccol == lcol){
 		crow = 0;
 		ccol = 0;
@@ -42,7 +42,6 @@ void move_down(char **argv, int max_length){
 	}
 	move(crow, ccol);
 
-	/* underline/highlight */
 	toggle_underline(argv, max_length);
 
 	move(crow, ccol);
@@ -58,19 +57,15 @@ int initialize_window(char** argv, int max_length){
 	crow = 0;
 	ccol = 0;
 	small_flag = 0;
-	/* print files in columns */
+	//prints columns
 	for (i = 1; argv[i] != NULL; i++){
-		/* if row overflow */
+		// if there is some row overflow
 		if (crow == mrow){
-			/* reset row and increment column */
 			crow = 0;
-			ccol += max_length;
-			/* if cant fint new row */
-			
+			ccol += max_length;		
 		}
 
 		if (ccol + my_strlen(argv[i]) >= mcol){
-				/* print resize window */
 				ccol = 0;
 				clear();
 				addstr("Please enlarge the window!");
@@ -78,7 +73,6 @@ int initialize_window(char** argv, int max_length){
 				small_flag = 1;
 				break;
 		}
-		/* print string */
 		if (selected[crow + (ccol / max_length) * mrow] == 1)
 			attron(A_STANDOUT);
 		mvaddnstr(crow, ccol, argv[i], max_length - 1);
@@ -87,10 +81,8 @@ int initialize_window(char** argv, int max_length){
 		refresh();
 		crow++;
 	}
-	/* store last r/c */
 	lrow = crow - 1;
 	lcol = ccol;
-	/* move to top left */
 	move(0, 0);
 	crow = 0;
 	ccol = 0;
@@ -101,13 +93,12 @@ int main(int argc, char **argv){
 	int i;
 	int max_length = 0;
 	int ch, small_flag;
-	
 	if (argc < 2){
 		my_str("Usage: ./my_select [stuff you want to select from]\n");
 		exit(0);
 	}
-	
-	initscr();
+	//this will make less work yeee!
+	newterm(NULL, stderr,stdin);
 	raw();
 	keypad(stdscr, TRUE);
 	noecho();
@@ -123,11 +114,10 @@ int main(int argc, char **argv){
 		}
 	}
 	max_length++;
-	/*initialize selected */
+	//set sel to 0
 	for (i = 0; i < argc - 1; i++){
 		selected[i] = 0;
 	}
-	/* init screen */
     small_flag = initialize_window(argv, max_length);
 	//make first underline
 	if (small_flag == 0){
@@ -136,34 +126,33 @@ int main(int argc, char **argv){
 		attroff(A_UNDERLINE);
 	}
 	move(0, 0);
-	
 	while (1){
 		ch = getch();
-		/* escape quits */
 		if (ch == KEY_RESIZE){
-			/* reinit screen */
+			//redo the screen
 			small_flag = initialize_window(argv, max_length);
-			/* if displaying files, make first underlined and highlighted if needed*/
 			if (small_flag == 0){
-				if (selected[crow + (ccol / max_length) * mrow] == 1)
+				if (selected[crow + (ccol / max_length) * mrow] == 1){
 					attron(A_UNDERLINE | A_STANDOUT);
-				else
+				}else{
 					attron(A_UNDERLINE);
+				}
 				addstr(argv[1]);
 				attroff(A_UNDERLINE);
-				if (selected[crow + (ccol / max_length) * mrow] == 1)
+				if (selected[crow + (ccol / max_length) * mrow] == 1){
 					attroff(A_STANDOUT);
+				}
 			}
 			move(0, 0);
 		}else if (ch == 27){
 			endwin();
 			exit(0);
 		}else if (ch == KEY_ENTER || ch == '\n'){
+			//get out of the loop to print selected to the console!
 			break;
 		}else if (ch == ' '){
 			if (selected[crow + (ccol / max_length) * mrow] == 1){
 				selected[crow + (ccol / max_length) * mrow] = 0;
-				/* remove highlight and replace with underline */
 				attron(A_UNDERLINE);
 				addstr(argv[1 + crow + (ccol / max_length) * mrow]);
 				attroff(A_UNDERLINE);
@@ -180,7 +169,6 @@ int main(int argc, char **argv){
 			if (selected[crow + (ccol / max_length) * mrow] == 1){
 				attroff(A_STANDOUT);
 			}
-			/* move cursor */
 			if (ccol == 0){
 				crow = 0;
 			}else{
@@ -189,32 +177,29 @@ int main(int argc, char **argv){
 			move(crow, ccol);
 			//now add the underline
 			toggle_underline(argv, max_length);
-			/* reset cursor */
 			move(crow, ccol);
 		}else if (ch == KEY_RIGHT){
-			/* remove underline */
-			if (selected[crow + (ccol / max_length) * mrow] == 1)
+			if (selected[crow + (ccol / max_length) * mrow] == 1){
 				attron(A_STANDOUT);
+			}
 			addstr(argv[1 + crow + (ccol / max_length) * mrow]);
-			if (selected[crow + (ccol / max_length) * mrow] == 1)
+			if (selected[crow + (ccol / max_length) * mrow] == 1){
 				attroff(A_STANDOUT);
-			/* move cursor */
-			if ((ccol + max_length) > lcol)
+			}
+			if ((ccol + max_length) > lcol){
 				crow = lrow;
-			else
+			}else{
 				ccol += max_length;
-
-			if (ccol == lcol && crow > lrow)
+			}
+			if (ccol == lcol && crow > lrow){
 				crow = lrow;
+			}
 
 			move(crow, ccol);
-			/* underline */
 			toggle_underline(argv, max_length);
-			/* reset cursor */
 			move(crow, ccol);
 		}else if (ch == KEY_DOWN){
 			move_down(argv, max_length);
-
 		}else if (ch == KEY_UP){
 			if (selected[crow + (ccol / max_length) * mrow] == 1){
 				attron(A_STANDOUT);
@@ -223,8 +208,6 @@ int main(int argc, char **argv){
 			if (selected[crow + (ccol / max_length) * mrow] == 1){
 				attroff(A_STANDOUT);
 			}
-
-			/* move */
 			if (crow == 0){
 				if (ccol == 0){
 					crow = lrow;
@@ -233,12 +216,10 @@ int main(int argc, char **argv){
 					ccol -= max_length;
 					crow = mrow - 1;
 				}
-				
 			}else{
 				crow--;
 			}
 			move(crow, ccol);
-			/* underline / highlight */
 			if (selected[crow + (ccol / max_length) * mrow] == 1){
 				attron(A_UNDERLINE | A_STANDOUT);
 			}else{
@@ -254,7 +235,6 @@ int main(int argc, char **argv){
 		}
 		refresh();
 	}
-				
 	endwin();
 	//now output the stuff
 	for (i = 0; i < argc - 1; i++){
@@ -264,6 +244,5 @@ int main(int argc, char **argv){
 		}
 	}
 	my_char('\n');
-	
 	return 0;
 }
