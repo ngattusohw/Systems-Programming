@@ -107,7 +107,7 @@ int main(int argc, char **argv){
 		exit(0);
 	}
 	
-	initscr();
+	newterm(NULL, stderr,stdin);
 	raw();
 	keypad(stdscr, TRUE);
 	noecho();
