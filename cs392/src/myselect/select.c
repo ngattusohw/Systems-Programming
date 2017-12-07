@@ -73,7 +73,7 @@ int initialize_window(char** argv, int max_length){
 				/* print resize window */
 				ccol = 0;
 				clear();
-				addstr("Resize your window");
+				addstr("Please enlarge the window!");
 				refresh();
 				small_flag = 1;
 				break;
