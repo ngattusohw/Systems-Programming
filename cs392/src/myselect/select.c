@@ -59,17 +59,17 @@ int initialize_window(char** argv, int max_length){
 	ccol = 0;
 	small_flag = 0;
 	/* print files in columns */
-	for (i = 1; argv[i] != NULL; i++)
-	{
+	for (i = 1; argv[i] != NULL; i++){
 		/* if row overflow */
-		if (crow == mrow)
-		{
+		if (crow == mrow){
 			/* reset row and increment column */
 			crow = 0;
 			ccol += max_length;
 			/* if cant fint new row */
-			if (ccol + my_strlen(argv[i]) >= mcol-5)
-			{
+			
+		}
+
+		if (ccol + my_strlen(argv[i]) >= mcol){
 				/* print resize window */
 				ccol = 0;
 				clear();
@@ -77,7 +77,6 @@ int initialize_window(char** argv, int max_length){
 				refresh();
 				small_flag = 1;
 				break;
-			}
 		}
 		/* print string */
 		if (selected[crow + (ccol / max_length) * mrow] == 1)
